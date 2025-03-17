@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1742187720 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+
+1742187362 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+
+1742185497 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+
