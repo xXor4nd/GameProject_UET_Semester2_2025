@@ -5,7 +5,8 @@
 #include <SDL_image.h>
 #include "defs.h"
 
-struct Graphics {
+struct Graphics
+{
     SDL_Renderer *renderer;
 	SDL_Window *window;
 
@@ -15,7 +16,8 @@ struct Graphics {
         SDL_Quit();
     }
 
-	void init() {
+	void init()
+	{
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
             logErrorAndExit("SDL_Init", SDL_GetError());
 
@@ -38,13 +40,13 @@ struct Graphics {
         SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
-	void prepareScene(void)
+	void prepareScene()
     {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
     }
 
-    void presentScene(void)
+    void presentScene()
     {
         SDL_RenderPresent(renderer);
     }
@@ -91,6 +93,7 @@ struct Graphics {
         SDL_DestroyWindow(window);
         SDL_Quit();
     }
+
 };
 
 #endif // _GRAPHICS__H

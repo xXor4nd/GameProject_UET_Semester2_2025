@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="background.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="graphics.h" />
 		<Unit filename="main.cpp" />
