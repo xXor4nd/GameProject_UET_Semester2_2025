@@ -14,7 +14,7 @@ struct ScrollingBackground
     int scrollingOffset = 0;
     int width = 0, height = 0;
 
-    ScrollingBackground(Graphics& g): graphics(g){}
+    ScrollingBackground (Graphics& g): graphics(g){}
 
     ~ScrollingBackground()
     {
@@ -24,13 +24,13 @@ struct ScrollingBackground
         }
     }
 
-    void setTexture(SDL_Texture* _IngameBackground)
+    void setTexture (SDL_Texture* _IngameBackground)
     {
         IngameBackground = _IngameBackground;
         SDL_QueryTexture(IngameBackground, NULL, NULL, &width, &height);
     }
 
-    void scroll(int velo)
+    void scroll (int velo)
     {
         scrollingOffset += velo;
         if(scrollingOffset > height)
@@ -39,7 +39,7 @@ struct ScrollingBackground
         }
     }
 
-    void renderBackground(int INGAME_BACKGROUND_SCROLLING_SPEED)
+    void renderBackground (int INGAME_BACKGROUND_SCROLLING_SPEED)
     {
         scrollingOffset += INGAME_BACKGROUND_SCROLLING_SPEED;
         if(scrollingOffset > height)
