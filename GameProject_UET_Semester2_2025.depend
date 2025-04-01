@@ -1,19 +1,16 @@
 # depslib dependency file v1.0
-1743474144 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
+1743497245 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
-	"graphics.h"
-	"defs.h"
-	"background.h"
-	"ship_motion.h"
+	"game.h"
 
 1743305676 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	"defs.h"
 
-1743473701 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+1743498773 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
 
 1743215108 source:e:\it\sdl\gameproject_uet_semester2_2025\src\main.cpp
 	<iostream>
@@ -29,13 +26,21 @@
 
 1743214549 e:\it\sdl\gameproject_uet_semester2_2025\src\defs.h
 
-1743473529 e:\it\sdl\gameproject_uet_semester2_2025\background.h
+1743474558 e:\it\sdl\gameproject_uet_semester2_2025\background.h
 	<iostream>
 	"graphics.h"
 	"defs.h"
 
-1743474363 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
+1743498643 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
 	<iostream>
 	"defs.h"
 	"graphics.h"
+
+1743498657 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+	"background.h"
+	"ship_motion.h"
 

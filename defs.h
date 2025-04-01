@@ -14,4 +14,8 @@ const int SHIP_WIDTH = 95;
 const int SHIP_HEIGHT = 95;
 const int SHIP_VELO = 5;
 
+const int BLUE_SHIP_FIXED_COORDINATE_Y = 35;
+const int RED_SHIP_FIXED_COORDINATE_Y = SCREEN_HEIGHT - SHIP_HEIGHT - 35;
+
+
 #endif
