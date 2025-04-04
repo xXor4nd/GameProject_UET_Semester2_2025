@@ -10,11 +10,10 @@ using namespace std;
 struct ScrollingBackground
 {
     Graphics& graphics;
-    SDL_Texture* IngameBackground = NULL;
+    SDL_Texture* IngameBackground;
     int scrollingOffset = 0;
-    int width = 0, height = 0;
 
-    ScrollingBackground (Graphics& g): graphics(g){}
+    ScrollingBackground (Graphics& g, const char* texturePath): graphics(g), IngameBackground(graphics.loadTexture(texturePath)) {}
 
     ~ScrollingBackground()
     {
@@ -24,31 +23,16 @@ struct ScrollingBackground
         }
     }
 
-    void setTexture (SDL_Texture* _IngameBackground)
-    {
-        IngameBackground = _IngameBackground;
-        SDL_QueryTexture(IngameBackground, NULL, NULL, &width, &height);
-    }
-
-    void scroll (int velo)
-    {
-        scrollingOffset += velo;
-        if(scrollingOffset > height)
-        {
-            scrollingOffset = 0;
-        }
-    }
-
     void renderBackground (int INGAME_BACKGROUND_SCROLLING_SPEED)
     {
         scrollingOffset += INGAME_BACKGROUND_SCROLLING_SPEED;
-        if(scrollingOffset > height)
+        if(scrollingOffset > INGAME_BACKGROUND_HEIGHT)
         {
             scrollingOffset = 0;
         }
 
         graphics.renderTexture(IngameBackground, 0, scrollingOffset);
-        graphics.renderTexture(IngameBackground, 0, scrollingOffset - height);
+        graphics.renderTexture(IngameBackground, 0, scrollingOffset - INGAME_BACKGROUND_HEIGHT);
     }
 };
 

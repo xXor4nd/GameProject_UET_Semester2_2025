@@ -8,17 +8,18 @@
 #include "defs.h"
 #include "background.h"
 #include "ship_motion.h"
+#include "bullet.h"
 
 void GameLoop()
 {
     Graphics graphics;
     graphics.init();
 
-    ScrollingBackground bgr(graphics);
-    bgr.setTexture(graphics.loadTexture(INGAME_BACKGROUND_IMG));
+    ScrollingBackground bgr(graphics, INGAME_BACKGROUND_IMG);
 
     Ship blueShip(graphics, BLUE_SHIP_IMG, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT);
     Ship redShip(graphics, RED_SHIP_IMG, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d);
+    Bullet bullet(graphics, BULLET_IMG);
 
     graphics.prepareScene();
 
@@ -46,6 +47,9 @@ void GameLoop()
 
         redShip.move();
         redShip.render();
+
+        bullet.move();
+        bullet.render();
 
         graphics.presentScene();
     }
