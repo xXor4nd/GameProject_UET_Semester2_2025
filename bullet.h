@@ -17,17 +17,6 @@ struct Bullet
     int y = 0, dy = 2;
     vector<SDL_Rect> mColliders;
 
-    void shiftCollider()
-    {
-        int tmp = 0;
-        for(int i = 0; i < (int)mColliders.size(); i++)
-        {
-            mColliders[i].x = x + (BULLET_WIDTH - mColliders[i].w) / 2;
-            mColliders[i].y = y + tmp;
-            tmp += mColliders[i].h;
-        }
-    }
-
     Bullet(Graphics& g, const char* texturePath ): graphics(g), texture(graphics.loadTexture(texturePath))
     {
         mColliders.resize(11);
@@ -48,6 +37,17 @@ struct Bullet
     }
 
     ~Bullet() { if(texture) SDL_DestroyTexture(texture); }
+
+    void shiftCollider()
+    {
+        int tmp = 0;
+        for(int i = 0; i < (int)mColliders.size(); i++)
+        {
+            mColliders[i].x = x + (BULLET_WIDTH - mColliders[i].w) / 2;
+            mColliders[i].y = y + tmp;
+            tmp += mColliders[i].h;
+        }
+    }
 
     void move(BlueShip& blueShip, RedShip& redShip)
     {

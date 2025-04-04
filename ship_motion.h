@@ -18,17 +18,6 @@ struct BlueShip
     SDL_Keycode leftKey, rightKey;
     vector<SDL_Rect> mBlueCollider;
 
-    void shiftCollider()
-    {
-        int tmp = 0;
-        for(int i = 0; i < (int)mBlueCollider.size(); i++)
-        {
-            mBlueCollider[i].x = x + (SHIP_WIDTH - mBlueCollider[i].w) / 2;
-            mBlueCollider[i].y = y + tmp;
-            tmp += mBlueCollider[i].h;
-        }
-    }
-
     BlueShip(Graphics& g, const char* texturePath, const int yPos, SDL_Keycode left, SDL_Keycode right)
         : graphics(g), texture(graphics.loadTexture(texturePath)), fixedY(yPos), leftKey(left), rightKey(right)
         {
@@ -63,6 +52,17 @@ struct BlueShip
         }
     }
 
+    void shiftCollider()
+    {
+        int tmp = 0;
+        for(int i = 0; i < (int)mBlueCollider.size(); i++)
+        {
+            mBlueCollider[i].x = x + (SHIP_WIDTH - mBlueCollider[i].w) / 2;
+            mBlueCollider[i].y = y + tmp;
+            tmp += mBlueCollider[i].h;
+        }
+    }
+
     void move()
     {
         x += dx;
@@ -92,17 +92,6 @@ struct RedShip
     const int fixedY;
     SDL_Keycode leftKey, rightKey;
     vector<SDL_Rect> mRedCollider;
-
-    void shiftCollider()
-    {
-        int tmp = 0;
-        for(int i = 0; i < (int)mRedCollider.size(); i++)
-        {
-            mRedCollider[i].x = x + (SHIP_WIDTH - mRedCollider[i].w) / 2;
-            mRedCollider[i].y = y + tmp;
-            tmp += mRedCollider[i].h;
-        }
-    }
 
     RedShip(Graphics& g, const char* texturePath, const int yPos, SDL_Keycode left, SDL_Keycode right)
         : graphics(g), texture(graphics.loadTexture(texturePath)), fixedY(yPos), leftKey(left), rightKey(right)
@@ -140,6 +129,17 @@ struct RedShip
                 case SDLK_a: if (leftKey == SDLK_a) dx += SHIP_VELO; break;
                 case SDLK_d: if (rightKey == SDLK_d) dx -= SHIP_VELO; break;
             }
+        }
+    }
+
+    void shiftCollider()
+    {
+        int tmp = 0;
+        for(int i = 0; i < (int)mRedCollider.size(); i++)
+        {
+            mRedCollider[i].x = x + (SHIP_WIDTH - mRedCollider[i].w) / 2;
+            mRedCollider[i].y = y + tmp;
+            tmp += mRedCollider[i].h;
         }
     }
 

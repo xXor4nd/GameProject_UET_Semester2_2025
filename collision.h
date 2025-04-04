@@ -26,10 +26,3 @@ bool checkCollision(const vector<SDL_Rect>& a, const vector<SDL_Rect>& b)
 }
 
 #endif // _COLLISION__H
-#include <iostream>
-using namespace std;
-
-int main() {
-	// your code goes here
-	return 0;
-}
