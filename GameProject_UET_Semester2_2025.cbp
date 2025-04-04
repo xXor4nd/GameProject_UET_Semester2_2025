@@ -33,6 +33,8 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="background.h" />
+		<Unit filename="bullet.h" />
+		<Unit filename="collision.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="game.h" />
 		<Unit filename="graphics.h" />

@@ -85,6 +85,15 @@ struct Graphics
         SDL_RenderCopy(renderer, texture, src, &dest);
     }
 
+    void DrawRestrictedLine()
+    {
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
+        SDL_RenderDrawLine(renderer, BLUE_SHIP_RESTRICTED_LINE_X, BLUE_SHIP_RESTRICTED_LINE_Y,
+                           BLUE_SHIP_RESTRICTED_LINE_X + SCREEN_WIDTH, BLUE_SHIP_RESTRICTED_LINE_Y);
+        SDL_RenderDrawLine(renderer, RED_SHIP_RESTRICTED_LINE_X, RED_SHIP_RESTRICTED_LINE_Y,
+                           RED_SHIP_RESTRICTED_LINE_X + SCREEN_WIDTH, RED_SHIP_RESTRICTED_LINE_Y);
+    }
+
     void quit()
     {
         IMG_Quit();

@@ -15,13 +15,7 @@ struct ScrollingBackground
 
     ScrollingBackground (Graphics& g, const char* texturePath): graphics(g), IngameBackground(graphics.loadTexture(texturePath)) {}
 
-    ~ScrollingBackground()
-    {
-        if (IngameBackground)
-        {
-            SDL_DestroyTexture(IngameBackground);
-        }
-    }
+    ~ScrollingBackground() { if(IngameBackground) SDL_DestroyTexture(IngameBackground); }
 
     void renderBackground (int INGAME_BACKGROUND_SCROLLING_SPEED)
     {
