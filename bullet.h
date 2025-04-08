@@ -6,6 +6,7 @@
 #include <vector>
 #include "ship_motion.h"
 #include "collision.h"
+#include "time.h"
 
 using namespace std;
 
@@ -13,8 +14,8 @@ struct Bullet
 {
     Graphics& graphics;
     SDL_Texture* texture;
-    int x = 0, dx = 2;
-    int y = 0, dy = 2;
+    int x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = 2;
+    int y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = 2;
     vector<SDL_Rect> mColliders;
 
     Bullet(Graphics& g, const char* texturePath ): graphics(g), texture(graphics.loadTexture(texturePath))
@@ -51,20 +52,23 @@ struct Bullet
 
     void move(BlueShip& blueShip, RedShip& redShip)
     {
-        x += dx;
-        shiftCollider();
-        if(x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH || checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
+        if(handleTimeInterval(graphics) == 0)
         {
-            dx = -dx;
+            x += dx;
             shiftCollider();
-        }
+            if(x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH || checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
+            {
+                dx = -dx;
+                shiftCollider();
+            }
 
-        y += dy;
-        shiftCollider();
-        if(y < 0 || y + BULLET_HEIGHT > SCREEN_HEIGHT || checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
-        {
-            dy = -dy;
+            y += dy;
             shiftCollider();
+            if(y < 0 || y + BULLET_HEIGHT > SCREEN_HEIGHT || checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
+            {
+                dy = -dy;
+                shiftCollider();
+            }
         }
     }
 

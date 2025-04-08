@@ -2,12 +2,13 @@
 1743651344 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
 	"game.h"
 
-1743739823 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
+1744078182 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_ttf.h>
 	"defs.h"
 
-1743753350 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+1744078552 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
 
 1743215108 source:e:\it\sdl\gameproject_uet_semester2_2025\src\main.cpp
 	<iostream>
@@ -34,7 +35,7 @@
 	"graphics.h"
 	<vector>
 
-1743777230 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1744078659 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
 	"graphics.h"
@@ -42,16 +43,26 @@
 	"background.h"
 	"ship_motion.h"
 	"bullet.h"
+	"time.h"
 
-1743778919 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
+1744079253 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
 	"graphics.h"
 	"defs.h"
 	<vector>
 	"ship_motion.h"
 	"collision.h"
+	"time.h"
 
 1743778936 e:\it\sdl\gameproject_uet_semester2_2025\collision.h
 	<iostream>
 	<vector>
 	<SDL.h>
+
+1744079249 e:\it\sdl\gameproject_uet_semester2_2025\time.h
+	<SDL_ttf.h>
+	<iostream>
+	<sstream>
+	<string>
+	"graphics.h"
+	"defs.h"
 

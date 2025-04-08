@@ -8,6 +8,7 @@
 #define BLUE_SHIP_IMG "assets/blue_ship.png"
 #define RED_SHIP_IMG "assets/red_ship.png"
 #define BULLET_IMG "assets/bullet.png"
+#define TIME_FONT "assets/Purisa-BoldOblique.ttf"
 
 const int INGAME_BACKGROUND_SCROLLING_SPEED = 1;
 const int INGAME_BACKGROUND_WIDTH = 350;
@@ -27,5 +28,8 @@ const int RED_SHIP_RESTRICTED_LINE_Y = SCREEN_HEIGHT - BLUE_SHIP_RESTRICTED_LINE
 
 const int BULLET_WIDTH = 19;
 const int BULLET_HEIGHT = 19;
+
+const int countdownTime = 3000;
+const int startTime = 0;
 
 #endif

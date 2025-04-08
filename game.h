@@ -9,6 +9,7 @@
 #include "background.h"
 #include "ship_motion.h"
 #include "bullet.h"
+#include "time.h"
 
 void GameLoop()
 {
