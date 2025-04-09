@@ -16,7 +16,7 @@ const int INGAME_BACKGROUND_HEIGHT = 750;
 
 const int SHIP_WIDTH = 95;
 const int SHIP_HEIGHT = 95;
-const int SHIP_VELO = 5;
+const int SHIP_VELO = 3;
 
 const int BLUE_SHIP_FIXED_COORDINATE_Y = 35;
 const int RED_SHIP_FIXED_COORDINATE_Y = SCREEN_HEIGHT - SHIP_HEIGHT - 35;
@@ -30,6 +30,6 @@ const int BULLET_WIDTH = 19;
 const int BULLET_HEIGHT = 19;
 
 const int countdownTime = 3000;
-const int startTime = 0;
+int startTime = 0;
 
 #endif

@@ -1,9 +1,12 @@
 #ifndef _BULLET__H
 #define _BULLET__H
 
+#include <vector>
+#include <iostream>
+#include <cmath>
+
 #include "graphics.h"
 #include "defs.h"
-#include <vector>
 #include "ship_motion.h"
 #include "collision.h"
 #include "time.h"
@@ -14,8 +17,9 @@ struct Bullet
 {
     Graphics& graphics;
     SDL_Texture* texture;
-    int x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = 2;
-    int y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = 2;
+    float x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = 1.5;
+    float y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = 1.5;
+    bool justCollided = false;
     vector<SDL_Rect> mColliders;
 
     Bullet(Graphics& g, const char* texturePath ): graphics(g), texture(graphics.loadTexture(texturePath))
@@ -56,17 +60,54 @@ struct Bullet
         {
             x += dx;
             shiftCollider();
-            if(x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH || checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
+
+            if(x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH)
             {
+                x -= dx;
                 dx = -dx;
                 shiftCollider();
             }
+            else if(!justCollided && (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider)))
+            {
+                x -= dx;
+                dx = -dx;
+                dx = dx > 0 ? dx + 0.2 : dx - 0.2;
+                justCollided = true;
+                shiftCollider();
+            }
+            else
+            {
+                justCollided = false;
+            }
+
 
             y += dy;
             shiftCollider();
-            if(y < 0 || y + BULLET_HEIGHT > SCREEN_HEIGHT || checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
+            if(y < 0 || y + BULLET_HEIGHT > SCREEN_HEIGHT)
             {
+                y -= dy;
                 dy = -dy;
+                shiftCollider();
+            }
+            else if(!justCollided && (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider)))
+            {
+                y -= dy;
+                dy = -dy;
+                dy = dy > 0 ? dy + 0.2 : dy - 0.2;
+                justCollided = true;
+                shiftCollider();
+            }
+            else
+            {
+                justCollided = false;
+            }
+
+            if(y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y || y > RED_SHIP_RESTRICTED_LINE_Y)
+            {
+                x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;
+                y = SCREEN_HEIGHT / 2 - BULLET_HEIGHT / 2;
+                dx = dy = 1.5;
+                startTime = SDL_GetTicks();
                 shiftCollider();
             }
         }
