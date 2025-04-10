@@ -18,8 +18,8 @@ void GameLoop()
 
     ScrollingBackground bgr(graphics, INGAME_BACKGROUND_IMG);
 
-    BlueShip blueShip(graphics, BLUE_SHIP_IMG, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT);
-    RedShip redShip(graphics, RED_SHIP_IMG, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d);
+    BlueShip blueShip(graphics, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT);
+    RedShip redShip(graphics, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d);
     Bullet bullet(graphics, BULLET_IMG);
 
     graphics.prepareScene();

@@ -104,6 +104,11 @@ struct Bullet
 
             if(y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y || y > RED_SHIP_RESTRICTED_LINE_Y)
             {
+                if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y)
+                    blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
+                else if (y > RED_SHIP_RESTRICTED_LINE_Y)
+                    redShip.healthLoss += HEALTH_BAR_WIDTH / 4;
+
                 x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;
                 y = SCREEN_HEIGHT / 2 - BULLET_HEIGHT / 2;
                 dx = dy = 1.5;

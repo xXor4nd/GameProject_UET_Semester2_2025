@@ -8,7 +8,7 @@
 	<SDL_ttf.h>
 	"defs.h"
 
-1744162137 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+1744294952 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
 
 1743215108 source:e:\it\sdl\gameproject_uet_semester2_2025\src\main.cpp
 	<iostream>
@@ -29,13 +29,13 @@
 	"graphics.h"
 	"defs.h"
 
-1744161866 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
+1744294911 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
 	<iostream>
 	"defs.h"
 	"graphics.h"
 	<vector>
 
-1744161881 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1744296061 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
 	"graphics.h"
@@ -45,7 +45,7 @@
 	"bullet.h"
 	"time.h"
 
-1744167351 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
+1744296009 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
 	<vector>
 	<iostream>
 	<cmath>
@@ -66,5 +66,10 @@
 	<sstream>
 	<string>
 	"graphics.h"
+	"defs.h"
+
+1744295740 e:\it\sdl\gameproject_uet_semester2_2025\health_logic.h
+	"ship_motion.h"
+	"bullet.h"
 	"defs.h"
 

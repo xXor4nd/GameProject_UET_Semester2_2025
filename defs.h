@@ -8,6 +8,8 @@
 #define BLUE_SHIP_IMG "assets/blue_ship.png"
 #define RED_SHIP_IMG "assets/red_ship.png"
 #define BULLET_IMG "assets/bullet.png"
+#define HEART_IMG "assets/Heart.png"
+#define HEALTH_BAR_IMG "assets/health_bar.png"
 #define TIME_FONT "assets/Purisa-BoldOblique.ttf"
 
 const int INGAME_BACKGROUND_SCROLLING_SPEED = 1;
@@ -31,5 +33,20 @@ const int BULLET_HEIGHT = 19;
 
 const int countdownTime = 3000;
 int startTime = 0;
+
+const int HEART_WIDTH = 25;
+const int HEART_HEIGHT = 25;
+const int HEALTH_BAR_WIDTH = 240;
+const int HEALTH_BAR_HEIGHT = 25;
+
+const int BLUE_SHIP_HEART_FIXED_COORDINATE_X = 20;
+const int BLUE_SHIP_HEART_FIXED_COORDINATE_Y = 5;
+const int BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_X = 60;
+const int BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y = 5;
+
+const int RED_SHIP_HEART_FIXED_COORDINATE_X = 20;
+const int RED_SHIP_HEART_FIXED_COORDINATE_Y = SCREEN_HEIGHT - BLUE_SHIP_FIXED_COORDINATE_Y;
+const int RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_X = 60;
+const int RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y = SCREEN_HEIGHT - BLUE_SHIP_FIXED_COORDINATE_Y;
 
 #endif
