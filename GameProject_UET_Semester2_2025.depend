@@ -29,15 +29,17 @@
 	"graphics.h"
 	"defs.h"
 
-1744294911 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
+1744337499 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
 	<iostream>
 	"defs.h"
 	"graphics.h"
 	<vector>
 
-1744296061 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1744337678 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
+	<ctime>
+	<cstdlib>
 	"graphics.h"
 	"defs.h"
 	"background.h"
@@ -45,7 +47,7 @@
 	"bullet.h"
 	"time.h"
 
-1744296009 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
+1744340245 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
 	<vector>
 	<iostream>
 	<cmath>

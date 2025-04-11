@@ -86,6 +86,7 @@ struct BlueShip
     void handleHealth()
     {
         SDL_Rect health_bar_rect = { BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, HEALTH_BAR_WIDTH - healthLoss, HEALTH_BAR_HEIGHT};
+        if (health_bar_rect.w < 0) health_bar_rect.w = 0;
         SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(graphics.renderer, &health_bar_rect);
     }
@@ -184,6 +185,7 @@ struct RedShip
     void handleHealth()
     {
         SDL_Rect health_bar_rect = { RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, HEALTH_BAR_WIDTH - healthLoss, HEALTH_BAR_HEIGHT};
+        if (health_bar_rect.w < 0) health_bar_rect.w = 0;
         SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(graphics.renderer, &health_bar_rect);
     }

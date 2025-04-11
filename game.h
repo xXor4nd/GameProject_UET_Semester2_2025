@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <ctime>
+#include <cstdlib>
 
 #include "graphics.h"
 #include "defs.h"
@@ -13,6 +15,8 @@
 
 void GameLoop()
 {
+    srand(time(NULL));
+
     Graphics graphics;
     graphics.init();
 
@@ -49,7 +53,7 @@ void GameLoop()
         redShip.move();
         redShip.render();
 
-        bullet.move(blueShip, redShip);
+        bullet.handleLogic(blueShip, redShip);
         bullet.render();
 
         graphics.presentScene();

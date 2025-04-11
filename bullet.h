@@ -54,55 +54,81 @@ struct Bullet
         }
     }
 
-    void move(BlueShip& blueShip, RedShip& redShip)
+    void handleLogic(BlueShip& blueShip, RedShip& redShip)
     {
-        if(handleTimeInterval(graphics) == 0)
+        if (handleTimeInterval(graphics) == 0)
         {
             x += dx;
             shiftCollider();
 
-            if(x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH)
+            bool collidedX = false;
+            if (x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH)
             {
                 x -= dx;
                 dx = -dx;
+                collidedX = true;
                 shiftCollider();
             }
-            else if(!justCollided && (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider)))
+            else if (!justCollided && (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider)))
             {
                 x -= dx;
+                collidedX = true;
+
                 dx = -dx;
                 dx = dx > 0 ? dx + 0.2 : dx - 0.2;
-                justCollided = true;
+
                 shiftCollider();
             }
-            else
-            {
-                justCollided = false;
-            }
-
 
             y += dy;
             shiftCollider();
-            if(y < 0 || y + BULLET_HEIGHT > SCREEN_HEIGHT)
+
+            bool collidedY = false;
+            if (y < 0 || y + BULLET_HEIGHT > SCREEN_HEIGHT)
             {
                 y -= dy;
                 dy = -dy;
+                collidedY = true;
                 shiftCollider();
             }
-            else if(!justCollided && (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider)))
+            else if (!justCollided && (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider)))
             {
                 y -= dy;
+                collidedY = true;
+
                 dy = -dy;
                 dy = dy > 0 ? dy + 0.2 : dy - 0.2;
-                justCollided = true;
+
                 shiftCollider();
+            }
+
+            if ((collidedX ^ collidedY))
+            {
+                justCollided = true;
+            }
+            else if (collidedX && collidedY)
+            {
+                float angle;
+                float dxNew, dyNew;
+                float curSpeed = sqrt(dx * dx + dy * dy);
+
+                do
+                {
+                    angle = (rand() % 170 - 85) * M_PI / 180.0;  // [-85, 85]
+                    dxNew = curSpeed * cos(angle);
+                    dyNew = curSpeed * sin(angle);
+                } while (fabs(dxNew) < 0.3 || fabs(dyNew) < 0.3);  // avoid horizontal angle / vertical angle
+
+                dx = dxNew;
+                dy = dyNew;
+                justCollided = true;
             }
             else
             {
                 justCollided = false;
             }
 
-            if(y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y || y > RED_SHIP_RESTRICTED_LINE_Y)
+            if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y || y > RED_SHIP_RESTRICTED_LINE_Y)
             {
                 if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y)
                     blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
@@ -117,6 +143,7 @@ struct Bullet
             }
         }
     }
+
 
     void render()
     {
