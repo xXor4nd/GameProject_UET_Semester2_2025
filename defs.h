@@ -10,7 +10,9 @@
 #define BULLET_IMG "assets/bullet.png"
 #define HEART_IMG "assets/Heart.png"
 #define HEALTH_BAR_IMG "assets/health_bar.png"
-#define TIME_FONT "assets/Purisa-BoldOblique.ttf"
+#define BUTTON_IMG "assets/button.png"
+#define FONT "assets/Purisa-BoldOblique.ttf"
+#define MENU_BACKGROUND_IMG "assets/menu_background.png"
 
 const int INGAME_BACKGROUND_SCROLLING_SPEED = 1;
 const int INGAME_BACKGROUND_WIDTH = 350;
@@ -49,4 +51,11 @@ const int RED_SHIP_HEART_FIXED_COORDINATE_Y = SCREEN_HEIGHT - BLUE_SHIP_FIXED_CO
 const int RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_X = 60;
 const int RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y = SCREEN_HEIGHT - BLUE_SHIP_FIXED_COORDINATE_Y;
 
+const int BUTTON_WIDTH = 210;
+const int BUTTON_HEIGHT = 57;
+const int BUTTON_COORDINATE_X = 70;
+const int BUTTON_COORDINATE_Y = 455;
+
+// 455 740
+// 70 210 70
 #endif

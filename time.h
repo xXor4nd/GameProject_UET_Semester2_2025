@@ -12,7 +12,7 @@ using namespace std;
 
 int handleTimeInterval(Graphics& graphics)
 {
-    TTF_Font* font = graphics.loadFont("assets/Purisa-BoldOblique.ttf", 72);
+    TTF_Font* font = graphics.loadFont(FONT, 72);
     SDL_Color color = {255, 255, 255, 100};
 
     int currentTime = SDL_GetTicks();

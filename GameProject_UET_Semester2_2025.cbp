@@ -39,6 +39,7 @@
 		<Unit filename="game.h" />
 		<Unit filename="graphics.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menu.h" />
 		<Unit filename="ship_motion.h" />
 		<Unit filename="time.h" />
 		<Extensions>
