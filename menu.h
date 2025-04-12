@@ -185,13 +185,19 @@ void handleGameStatePlay1P(Graphics& graphics, ScrollingBackground& bgr, BlueShi
                 quit = true;
             }
 
+            else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
+            {
+                currentState = PAUSED;
+                quit = true;
+            }
+
             redShip.handleEvent(e);
         }
 
         int blueCenterX = blueShip.x + SHIP_WIDTH / 2;
         int bulletCenterX = bullet.x + BULLET_WIDTH / 2;
 
-        const int DEADZONE_X = 15;
+        const int DEADZONE_X = 47;
         if (bullet.dy < 0)
         {
             if (bulletCenterX < blueCenterX - DEADZONE_X)
@@ -289,7 +295,8 @@ void handleGameStateGamemode(Graphics& graphics, GameState& currentState, GameMo
     SDL_DestroyTexture(bgr);
 }
 
-void handleGameStatePaused(Graphics& graphics, GameState& currentState, bool& replayRequested) {
+void handleGameStatePaused(Graphics& graphics, GameState& currentState, bool& replayRequested)
+{
     SDL_Texture* bgr = graphics.loadTexture(INGAME_BACKGROUND_IMG);
 
     Button buttons[3] = { Button(graphics), Button(graphics), Button(graphics) };
@@ -370,6 +377,8 @@ void handleGameStatePaused(Graphics& graphics, GameState& currentState, bool& re
 
 void handleGameStateTutorial(Graphics& graphics, GameState& currentState)
 {
+    SDL_Texture* bgr = graphics.loadTexture(INGAME_BACKGROUND_IMG);
+    SDL_Texture* tutorialIMG = graphics.loadTexture(TUTORIAL_IMG);
 
     SDL_Event e;
     bool quit = false;
@@ -383,15 +392,20 @@ void handleGameStateTutorial(Graphics& graphics, GameState& currentState)
                 quit = true;
             }
 
+            else if ( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_RETURN) )
+            {
+                currentState = MENU;
+                quit = true;
+            }
         }
+
+        graphics.renderTexture(bgr, 0, 0);
+        graphics.renderTexture(tutorialIMG, 0, 235);
+        graphics.presentScene();
     }
+    SDL_DestroyTexture(bgr);
+    SDL_DestroyTexture(tutorialIMG);
 }
-
-void handleGameStateExit(Graphics& graphics)
-{
-
-}
-
 
 void resetGame(Bullet& bullet, BlueShip& blueShip, RedShip& redShip, int& blueHealthLoss, int& redHealthLoss)
 {

@@ -114,7 +114,7 @@ struct Bullet
 
                 do
                 {
-                    angle = (rand() % 160 - 80) * M_PI / 180.0;  // [-80, 79]
+                    angle = (rand() % 130 - 65) * M_PI / 180.0;  // [-65, 64]
                     dxNew = curSpeed * cos(angle);
                     dyNew = curSpeed * sin(angle);
                 } while (fabs(dxNew) < 0.3 || fabs(dyNew) < 0.3);  // avoid horizontal angle / vertical angle

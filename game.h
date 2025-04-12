@@ -34,6 +34,7 @@ void Game()
         switch (currentState)
         {
             case MENU:
+                resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
                 handleGameStateMenu(graphics, currentState);
                 break;
             case PLAY:
@@ -60,8 +61,6 @@ void Game()
                 break;
         }
     }
-
-    handleGameStateExit(graphics);
     graphics.quit();
 }
 
