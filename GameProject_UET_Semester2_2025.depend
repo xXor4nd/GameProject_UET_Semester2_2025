@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1744368231 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
+1744444448 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
 	"game.h"
 
 1744078182 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
@@ -35,7 +35,7 @@
 	"graphics.h"
 	<vector>
 
-1744383600 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1744445445 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<ctime>
@@ -48,7 +48,7 @@
 	"time.h"
 	"menu.h"
 
-1744340245 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
+1744442736 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
 	<vector>
 	<iostream>
 	<cmath>
@@ -76,7 +76,7 @@
 	"bullet.h"
 	"defs.h"
 
-1744383645 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
+1744445983 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
 	"graphics.h"
 	"background.h"
 	"ship_motion.h"

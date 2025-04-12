@@ -114,7 +114,7 @@ struct Bullet
 
                 do
                 {
-                    angle = (rand() % 170 - 85) * M_PI / 180.0;  // [-85, 85]
+                    angle = (rand() % 160 - 80) * M_PI / 180.0;  // [-80, 79]
                     dxNew = curSpeed * cos(angle);
                     dyNew = curSpeed * sin(angle);
                 } while (fabs(dxNew) < 0.3 || fabs(dyNew) < 0.3);  // avoid horizontal angle / vertical angle
@@ -128,11 +128,12 @@ struct Bullet
                 justCollided = false;
             }
 
-            if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y || y > RED_SHIP_RESTRICTED_LINE_Y)
+            const int DEADZONE_Y = 10;
+            if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
             {
-                if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y)
+                if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
                     blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
-                else if (y > RED_SHIP_RESTRICTED_LINE_Y)
+                else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
                     redShip.healthLoss += HEALTH_BAR_WIDTH / 4;
 
                 x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;

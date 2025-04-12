@@ -16,8 +16,6 @@
 
 void Game()
 {
-    srand(time(NULL));
-
     Graphics graphics;
     graphics.init();
 
@@ -27,6 +25,7 @@ void Game()
     Bullet bullet(graphics, BULLET_IMG);
 
     GameState currentState = MENU;
+    GameMode currentMode = MODE_1_PLAYER;
 
     graphics.prepareScene();
 
@@ -38,14 +37,25 @@ void Game()
                 handleGameStateMenu(graphics, currentState);
                 break;
             case PLAY:
-                handleGameStatePlay(graphics, bgr, blueShip, redShip, bullet, currentState);
+                if (currentMode == MODE_1_PLAYER) handleGameStatePlay1P(graphics, bgr, blueShip, redShip, bullet, currentState);
+                else handleGameStatePlay2P(graphics, bgr, blueShip, redShip, bullet, currentState);
                 break;
             case GAMEMODE:
-                handleGameStateGamemode(currentState);
+                handleGameStateGamemode(graphics, currentState, currentMode);
                 break;
             case TUTORIAL:
-                handleGameStateTutorial(currentState);
+                handleGameStateTutorial(graphics, currentState);
                 break;
+            case PAUSED:
+                {
+                    bool replayRequested = false;
+                    handleGameStatePaused(graphics, currentState, replayRequested);
+                    if (replayRequested)
+                    {
+                        resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
+                    }
+                    break;
+                }
             default:
                 break;
         }
