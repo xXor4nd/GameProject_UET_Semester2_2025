@@ -4,18 +4,23 @@
 #include <iostream>
 #include "graphics.h"
 #include "defs.h"
+#include "Assets.h"
 
 using namespace std;
 
 struct ScrollingBackground
 {
     Graphics& graphics;
-    SDL_Texture* IngameBackground;
+    Asset& assets;
+    SDL_Texture* IngameBackground = NULL;
     int scrollingOffset = 0;
 
-    ScrollingBackground (Graphics& g, const char* texturePath): graphics(g), IngameBackground(graphics.loadTexture(texturePath)) {}
+    ScrollingBackground (Graphics& g, Asset& _assets): graphics(g), assets(_assets)
+    {
+        IngameBackground = assets.background;
+    }
 
-    ~ScrollingBackground() { if(IngameBackground) SDL_DestroyTexture(IngameBackground); }
+    ~ScrollingBackground() {}
 
     void renderBackground (int INGAME_BACKGROUND_SCROLLING_SPEED)
     {

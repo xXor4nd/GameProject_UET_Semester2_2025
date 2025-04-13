@@ -2,20 +2,23 @@
 #define _SHIP_MOTION__H
 
 #include <iostream>
+#include <vector>
+
 #include "defs.h"
 #include "graphics.h"
-#include <vector>
+#include "Assets.h"
 
 using namespace std;
 
 struct BlueShip
 {
     Graphics& graphics;
+    Asset& assets;
     int x = 0, dx = 0;
     int y = BLUE_SHIP_RESTRICTED_LINE_Y;
-    SDL_Texture* shipTexture = graphics.loadTexture(BLUE_SHIP_IMG);
-    SDL_Texture* health_bar_texture = graphics.loadTexture(HEALTH_BAR_IMG);
-    SDL_Texture* blue_heart = graphics.loadTexture(HEART_IMG);
+    SDL_Texture* shipTexture = NULL;
+    SDL_Texture* health_bar_texture = NULL;
+    SDL_Texture* blue_heart = NULL;
     int healthLoss = 0;
     bool isGameOver = false;
 
@@ -23,9 +26,13 @@ struct BlueShip
     SDL_Keycode leftKey, rightKey;
     vector<SDL_Rect> mBlueCollider;
 
-    BlueShip(Graphics& g, const int yPos, SDL_Keycode left, SDL_Keycode right)
-        : graphics(g), fixedY(yPos), leftKey(left), rightKey(right)
+    BlueShip(Graphics& g, Asset& _assets, const int yPos, SDL_Keycode left, SDL_Keycode right)
+        : graphics(g), assets(_assets), fixedY(yPos), leftKey(left), rightKey(right)
         {
+            shipTexture = assets.blueShip;
+            health_bar_texture = assets.healthBar;
+            blue_heart = assets.heart;
+
             mBlueCollider.resize(3);
 
             mBlueCollider[0] = {0, 0, 95, 1};
@@ -35,12 +42,7 @@ struct BlueShip
             shiftCollider();
         }
 
-    ~BlueShip()
-    {
-        if (shipTexture) SDL_DestroyTexture(shipTexture);
-        if (health_bar_texture) SDL_DestroyTexture(health_bar_texture);
-        if (blue_heart) SDL_DestroyTexture(blue_heart);
-    }
+    ~BlueShip(){}
 
     void handleEvent(SDL_Event& e)
     {
@@ -107,20 +109,25 @@ struct BlueShip
 struct RedShip
 {
     Graphics& graphics;
+    Asset& assets;
     int x = 0, dx = 0;
     int y = RED_SHIP_RESTRICTED_LINE_Y;
-    SDL_Texture* shipTexture = graphics.loadTexture(RED_SHIP_IMG);
-    SDL_Texture* health_bar_texture = graphics.loadTexture(HEALTH_BAR_IMG);
-    SDL_Texture* red_heart = graphics.loadTexture(HEART_IMG);
+    SDL_Texture* shipTexture = NULL;
+    SDL_Texture* health_bar_texture = NULL;
+    SDL_Texture* red_heart = NULL;
     int healthLoss = 0;
     const int fixedY;
     SDL_Keycode leftKey, rightKey;
     vector<SDL_Rect> mRedCollider;
     bool isGameOver = false;
 
-    RedShip(Graphics& g, const int yPos, SDL_Keycode left, SDL_Keycode right)
-        : graphics(g), fixedY(yPos), leftKey(left), rightKey(right)
+    RedShip(Graphics& g, Asset& _assets, const int yPos, SDL_Keycode left, SDL_Keycode right)
+        : graphics(g), assets(_assets), fixedY(yPos), leftKey(left), rightKey(right)
         {
+            shipTexture = assets.redShip;
+            health_bar_texture = assets.healthBar;
+            red_heart = assets.heart;
+
             mRedCollider.resize(3);
 
             mRedCollider[0].w = 63;
@@ -135,12 +142,7 @@ struct RedShip
             shiftCollider();
         }
 
-    ~RedShip()
-    {
-        if (shipTexture) SDL_DestroyTexture(shipTexture);
-        if (health_bar_texture) SDL_DestroyTexture(health_bar_texture);
-        if (red_heart) SDL_DestroyTexture(red_heart);
-    }
+    ~RedShip(){}
 
     void handleEvent(SDL_Event& e)
     {

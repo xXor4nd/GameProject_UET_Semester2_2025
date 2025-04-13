@@ -8,7 +8,7 @@
 	<SDL_ttf.h>
 	"defs.h"
 
-1744459729 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+1744552854 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
 
 1743215108 source:e:\it\sdl\gameproject_uet_semester2_2025\src\main.cpp
 	<iostream>
@@ -24,18 +24,20 @@
 
 1743214549 e:\it\sdl\gameproject_uet_semester2_2025\src\defs.h
 
-1743735531 e:\it\sdl\gameproject_uet_semester2_2025\background.h
+1744555694 e:\it\sdl\gameproject_uet_semester2_2025\background.h
 	<iostream>
 	"graphics.h"
 	"defs.h"
+	"Assets.h"
 
-1744537292 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
+1744555893 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
 	<iostream>
-	"defs.h"
-	"graphics.h"
 	<vector>
+	"defs.h"
+	"graphics.h"
+	"Assets.h"
 
-1744551779 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1744555390 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<ctime>
@@ -47,8 +49,9 @@
 	"bullet.h"
 	"time.h"
 	"menu.h"
+	"Assets.h"
 
-1744460931 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
+1744554479 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
 	<vector>
 	<iostream>
 	<cmath>
@@ -57,28 +60,34 @@
 	"ship_motion.h"
 	"collision.h"
 	"time.h"
+	"Assets.h"
 
 1743778936 e:\it\sdl\gameproject_uet_semester2_2025\collision.h
 	<iostream>
 	<vector>
 	<SDL.h>
 
-1744362702 e:\it\sdl\gameproject_uet_semester2_2025\time.h
+1744554392 e:\it\sdl\gameproject_uet_semester2_2025\time.h
 	<SDL_ttf.h>
 	<iostream>
 	<sstream>
 	<string>
 	"graphics.h"
 	"defs.h"
+	"Assets.h"
 
 1744295740 e:\it\sdl\gameproject_uet_semester2_2025\health_logic.h
 	"ship_motion.h"
 	"bullet.h"
 	"defs.h"
 
-1744551765 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
+1744555893 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
 	"graphics.h"
 	"background.h"
 	"ship_motion.h"
 	"bullet.h"
+	"Assets.h"
+
+1744554356 e:\it\sdl\gameproject_uet_semester2_2025\assets.h
+	"graphics.h"
 

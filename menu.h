@@ -5,6 +5,7 @@
 #include "background.h"
 #include "ship_motion.h"
 #include "bullet.h"
+#include "Assets.h"
 
 enum GameState
 {
@@ -26,21 +27,18 @@ enum GameMode
 struct Button
 {
     Graphics& graphics;
+    Asset& assets;
     SDL_Rect rect;
     const char* label;
-    SDL_Texture* buttonIMG;
+    SDL_Texture* buttonIMG = NULL;
     TTF_Font* font;
     bool isWithin = false;
     bool isSelected = false;
 
-    Button (Graphics& g) : graphics(g)
+    Button (Graphics& g, Asset& _assets) : graphics(g), assets(_assets)
     {
-        buttonIMG = graphics.loadTexture(BUTTON_IMG);
-        font = graphics.loadFont(FONT, 30);
-    }
-    ~Button ()
-    {
-        if (buttonIMG) SDL_DestroyTexture(buttonIMG);
+        buttonIMG = assets.button;
+        font = assets.font30;
     }
 
     void render()
@@ -55,7 +53,7 @@ struct Button
         SDL_Texture* buttonText = graphics.renderText(label, font, color);
 
         int textW, textH;
-        SDL_QueryTexture(buttonText, nullptr, nullptr, &textW, &textH);
+        SDL_QueryTexture(buttonText, NULL, NULL, &textW, &textH);
         int textX = rect.x + (rect.w - textW) / 2;
         int textY = rect.y + (rect.h - textH) / 2;
         graphics.renderTexture(buttonText, textX, textY);
@@ -92,11 +90,11 @@ void resetGame(Bullet& bullet, BlueShip& blueShip, RedShip& redShip, int& blueHe
     startTime = SDL_GetTicks();
 }
 
-void handleGameStateMenu(Graphics& graphics, GameState& currentState)
+void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentState)
 {
-    SDL_Texture* menuBackground = graphics.loadTexture(MENU_BACKGROUND_IMG);
+    SDL_Texture* menuBackground = assets.menuBackground;
 
-    Button buttons[4] = { Button(graphics), Button(graphics), Button(graphics), Button(graphics) };
+    Button buttons[4] = { Button(graphics, assets), Button(graphics, assets), Button(graphics, assets), Button(graphics, assets) };
     const char* labels[4] = {"PLAY", "GAMEMODE", "TUTORIAL", "EXIT"};
 
     for (int i = 0; i < 4; i++)
@@ -146,8 +144,6 @@ void handleGameStateMenu(Graphics& graphics, GameState& currentState)
         }
         graphics.presentScene();
     }
-
-    SDL_DestroyTexture(menuBackground);
 }
 
 void handleGameStatePlay2P(Graphics& graphics, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet, GameState& currentState)
@@ -277,11 +273,11 @@ void handleGameStatePlay1P(Graphics& graphics, ScrollingBackground& bgr, BlueShi
 }
 
 
-void handleGameStateGamemode(Graphics& graphics, GameState& currentState, GameMode& currentMode)
+void handleGameStateGamemode(Graphics& graphics, Asset& assets, GameState& currentState, GameMode& currentMode)
 {
-    SDL_Texture* bgr = graphics.loadTexture(INGAME_BACKGROUND_IMG);
+    SDL_Texture* bgr = assets.background;
 
-    Button buttons[3] = { Button(graphics), Button(graphics), Button(graphics) };
+    Button buttons[3] = { Button(graphics, assets), Button(graphics, assets), Button(graphics, assets) };
     const char* labels[3] = {"1 PLAYER", "2 PLAYERS", "BACK"};
 
     for (int i = 0; i < 3; i++)
@@ -341,14 +337,13 @@ void handleGameStateGamemode(Graphics& graphics, GameState& currentState, GameMo
         }
         graphics.presentScene();
     }
-    SDL_DestroyTexture(bgr);
 }
 
-void handleGameStatePaused(Graphics& graphics, GameState& currentState, bool& replayRequested)
+void handleGameStatePaused(Graphics& graphics, Asset& assets, GameState& currentState, bool& replayRequested)
 {
-    SDL_Texture* bgr = graphics.loadTexture(INGAME_BACKGROUND_IMG);
+    SDL_Texture* bgr = assets.background;
 
-    Button buttons[3] = { Button(graphics), Button(graphics), Button(graphics) };
+    Button buttons[3] = { Button(graphics, assets), Button(graphics, assets), Button(graphics, assets) };
     const char* labels[3] = {"RESUME", "REPLAY", "MENU"};
 
     for (int i = 0; i < 3; i++)
@@ -408,26 +403,24 @@ void handleGameStatePaused(Graphics& graphics, GameState& currentState, bool& re
             buttons[i].render();
         }
 
-        TTF_Font* titleFont = graphics.loadFont(FONT, 40);
+        TTF_Font* titleFont = assets.font40;
         SDL_Color color = {255, 255, 255};
         SDL_Texture* titleText = graphics.renderText("GAME PAUSED", titleFont, color);
 
         int textW, textH;
         SDL_QueryTexture(titleText, NULL, NULL, &textW, &textH);
         graphics.renderTexture(titleText, SCREEN_WIDTH/2 - textW/2, 180);
-        SDL_DestroyTexture(titleText);
 
         graphics.presentScene();
+        SDL_DestroyTexture(titleText);
     }
-
-    SDL_DestroyTexture(bgr);
 }
 
 
-void handleGameStateTutorial(Graphics& graphics, GameState& currentState)
+void handleGameStateTutorial(Graphics& graphics, Asset& assets, GameState& currentState)
 {
-    SDL_Texture* bgr = graphics.loadTexture(INGAME_BACKGROUND_IMG);
-    SDL_Texture* tutorialIMG = graphics.loadTexture(TUTORIAL_IMG);
+    SDL_Texture* bgr = assets.background;
+    SDL_Texture* tutorialIMG = assets.tutorial;
 
     SDL_Event e;
     bool quit = false;
@@ -452,15 +445,13 @@ void handleGameStateTutorial(Graphics& graphics, GameState& currentState)
         graphics.renderTexture(tutorialIMG, 0, 235);
         graphics.presentScene();
     }
-    SDL_DestroyTexture(bgr);
-    SDL_DestroyTexture(tutorialIMG);
 }
 
-void handleGameStateGameOver(Graphics& graphics, GameState& currentState, Bullet& bullet, RedShip& redShip, BlueShip& blueShip, GameMode& currentMode)
+void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& currentState, Bullet& bullet, RedShip& redShip, BlueShip& blueShip, GameMode& currentMode)
 {
-    SDL_Texture* bgr = graphics.loadTexture(INGAME_BACKGROUND_IMG);
+    SDL_Texture* bgr = assets.background;
 
-    Button buttons[2] = { Button(graphics), Button(graphics) };
+    Button buttons[2] = { Button(graphics, assets), Button(graphics, assets) };
     const char* labels[2] = {"REPLAY", "MENU"};
 
     for (int i = 0; i < 2; i++)
@@ -515,7 +506,7 @@ void handleGameStateGameOver(Graphics& graphics, GameState& currentState, Bullet
             buttons[i].render();
         }
 
-        TTF_Font* titleFont = graphics.loadFont(FONT, 40);
+        TTF_Font* titleFont = assets.font40;
         SDL_Color color = {255, 255, 255};
         SDL_Texture* titleText = graphics.renderText("GAME OVER!", titleFont, color);
 
@@ -563,11 +554,7 @@ void handleGameStateGameOver(Graphics& graphics, GameState& currentState, Bullet
 
         SDL_DestroyTexture(titleText);
         SDL_DestroyTexture(winningText);
-
-        SDL_Delay(10);
     }
-
-    SDL_DestroyTexture(bgr);
 }
 
 #endif // _MENU__H

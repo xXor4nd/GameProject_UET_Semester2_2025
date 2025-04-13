@@ -5,14 +5,16 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+
 #include "graphics.h"
 #include "defs.h"
+#include "Assets.h"
 
 using namespace std;
 
-int handleTimeInterval(Graphics& graphics)
+int handleTimeInterval(Graphics& graphics, Asset& assets)
 {
-    TTF_Font* font = graphics.loadFont(FONT, 72);
+    TTF_Font* font = assets.font72;
     SDL_Color color = {255, 255, 255, 100};
 
     int currentTime = SDL_GetTicks();

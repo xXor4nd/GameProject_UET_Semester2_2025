@@ -10,20 +10,24 @@
 #include "ship_motion.h"
 #include "collision.h"
 #include "time.h"
+#include "Assets.h"
 
 using namespace std;
 
 struct Bullet
 {
     Graphics& graphics;
-    SDL_Texture* texture;
+    Asset& assets;
+    SDL_Texture* texture = NULL;
     float x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = 1.5;
     float y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = 1.5;
     bool justCollided = false;
     vector<SDL_Rect> mColliders;
 
-    Bullet(Graphics& g, const char* texturePath ): graphics(g), texture(graphics.loadTexture(texturePath))
+    Bullet(Graphics& g, Asset& _assets): graphics(g), assets(_assets)
     {
+        texture = assets.bullet;
+
         mColliders.resize(11);
 
         mColliders[0] = {0, 0, 5, 1};
@@ -56,7 +60,7 @@ struct Bullet
 
     void handleLogic(BlueShip& blueShip, RedShip& redShip)
     {
-        if (handleTimeInterval(graphics) == 0)
+        if (handleTimeInterval(graphics, assets) == 0)
         {
             x += dx;
             shiftCollider();
