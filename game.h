@@ -57,6 +57,9 @@ void Game()
                     }
                     break;
                 }
+            case GAME_OVER:
+                handleGameStateGameOver(graphics, currentState, bullet, redShip, blueShip, currentMode);
+                break;
             default:
                 break;
         }

@@ -13,6 +13,7 @@
 #define BUTTON_IMG "assets/button.png"
 #define FONT "assets/Purisa-BoldOblique.ttf"
 #define MENU_BACKGROUND_IMG "assets/menu_background.png"
+#define TUTORIAL_IMG "assets/tutorial.png"
 
 const int INGAME_BACKGROUND_SCROLLING_SPEED = 1;
 const int INGAME_BACKGROUND_WIDTH = 350;

@@ -17,6 +17,7 @@ struct BlueShip
     SDL_Texture* health_bar_texture = graphics.loadTexture(HEALTH_BAR_IMG);
     SDL_Texture* blue_heart = graphics.loadTexture(HEART_IMG);
     int healthLoss = 0;
+    bool isGameOver = false;
 
     const int fixedY;
     SDL_Keycode leftKey, rightKey;
@@ -86,7 +87,7 @@ struct BlueShip
     void handleHealth()
     {
         SDL_Rect health_bar_rect = { BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, HEALTH_BAR_WIDTH - healthLoss, HEALTH_BAR_HEIGHT};
-        if (health_bar_rect.w < 0) health_bar_rect.w = 0;
+        if (HEALTH_BAR_WIDTH - healthLoss == 0) isGameOver = true;
         SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(graphics.renderer, &health_bar_rect);
     }
@@ -115,6 +116,7 @@ struct RedShip
     const int fixedY;
     SDL_Keycode leftKey, rightKey;
     vector<SDL_Rect> mRedCollider;
+    bool isGameOver = false;
 
     RedShip(Graphics& g, const int yPos, SDL_Keycode left, SDL_Keycode right)
         : graphics(g), fixedY(yPos), leftKey(left), rightKey(right)
@@ -185,7 +187,7 @@ struct RedShip
     void handleHealth()
     {
         SDL_Rect health_bar_rect = { RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, HEALTH_BAR_WIDTH - healthLoss, HEALTH_BAR_HEIGHT};
-        if (health_bar_rect.w < 0) health_bar_rect.w = 0;
+        if (HEALTH_BAR_WIDTH - healthLoss == 0) isGameOver = true;
         SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(graphics.renderer, &health_bar_rect);
     }

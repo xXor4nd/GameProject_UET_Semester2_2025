@@ -13,7 +13,8 @@ enum GameState
     GAMEMODE,
     TUTORIAL,
     EXIT,
-    PAUSED
+    PAUSED,
+    GAME_OVER
 };
 
 enum GameMode
@@ -68,6 +69,28 @@ struct Button
     }
 
 };
+
+void resetGame(Bullet& bullet, BlueShip& blueShip, RedShip& redShip, int& blueHealthLoss, int& redHealthLoss)
+{
+    bullet.x = (SCREEN_WIDTH - BULLET_WIDTH) / 2;
+    bullet.y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2;
+    bullet.dx = 1.5;
+    bullet.dy = 1.5;
+
+    blueShip.x = 0;
+    redShip.x = 0;
+
+    blueShip.dx = 0;
+    redShip.dx = 0;
+
+    blueHealthLoss = 0;
+    redHealthLoss = 0;
+
+    blueShip.isGameOver = false;
+    redShip.isGameOver = false;
+
+    startTime = SDL_GetTicks();
+}
 
 void handleGameStateMenu(Graphics& graphics, GameState& currentState)
 {
@@ -156,6 +179,19 @@ void handleGameStatePlay2P(Graphics& graphics, ScrollingBackground& bgr, BlueShi
 
         }
 
+        if (blueShip.isGameOver)
+        {
+            SDL_Delay(1500);
+            currentState = GAME_OVER;
+            quit = true;
+        }
+        else if (redShip.isGameOver)
+        {
+            SDL_Delay(1500);
+            currentState = GAME_OVER;
+            quit = true;
+        }
+
         bgr.renderBackground(INGAME_BACKGROUND_SCROLLING_SPEED);
 
         blueShip.move();
@@ -210,6 +246,19 @@ void handleGameStatePlay1P(Graphics& graphics, ScrollingBackground& bgr, BlueShi
         else
         {
             blueShip.dx = 0;
+        }
+
+        if (blueShip.isGameOver)
+        {
+            SDL_Delay(1500);
+            currentState = GAME_OVER;
+            quit = true;
+        }
+        else if (redShip.isGameOver)
+        {
+            SDL_Delay(1500);
+            currentState = GAME_OVER;
+            quit = true;
         }
 
         bgr.renderBackground(INGAME_BACKGROUND_SCROLLING_SPEED);
@@ -407,20 +456,118 @@ void handleGameStateTutorial(Graphics& graphics, GameState& currentState)
     SDL_DestroyTexture(tutorialIMG);
 }
 
-void resetGame(Bullet& bullet, BlueShip& blueShip, RedShip& redShip, int& blueHealthLoss, int& redHealthLoss)
+void handleGameStateGameOver(Graphics& graphics, GameState& currentState, Bullet& bullet, RedShip& redShip, BlueShip& blueShip, GameMode& currentMode)
 {
-    bullet.x = (SCREEN_WIDTH - BULLET_WIDTH) / 2;
-    bullet.y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2;
-    bullet.dx = 1.5;
-    bullet.dy = 1.5;
+    SDL_Texture* bgr = graphics.loadTexture(INGAME_BACKGROUND_IMG);
 
-    blueShip.x = 0;
-    redShip.x = 0;
+    Button buttons[2] = { Button(graphics), Button(graphics) };
+    const char* labels[2] = {"REPLAY", "MENU"};
 
-    blueHealthLoss = 0;
-    redHealthLoss = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        buttons[i].label = labels[i];
+        buttons[i].rect = {BUTTON_COORDINATE_X, 318 + i * 57, BUTTON_WIDTH, BUTTON_HEIGHT};
+    }
 
-    startTime = SDL_GetTicks();
+    SDL_Event e;
+    bool quit = false;
+
+    while (!quit)
+    {
+        while (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+            {
+                currentState = EXIT;
+                quit = true;
+            }
+            else if (e.type == SDL_MOUSEMOTION)
+            {
+                int mx = e.motion.x, my = e.motion.y;
+                for (auto& btn : buttons)
+                    btn.isWithin = btn.isInside(mx, my);
+            }
+            else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    if (buttons[i].isWithin)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                currentState = PLAY;
+                                resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
+                                break;
+                            case 1:
+                                currentState = MENU;
+                                break;
+                        }
+                        quit = true;
+                    }
+                }
+            }
+        }
+
+        graphics.renderTexture(bgr, 0, 0);
+        for (int i = 0; i < 2; i++)
+        {
+            buttons[i].render();
+        }
+
+        TTF_Font* titleFont = graphics.loadFont(FONT, 40);
+        SDL_Color color = {255, 255, 255};
+        SDL_Texture* titleText = graphics.renderText("GAME OVER!", titleFont, color);
+
+        int textW, textH;
+        SDL_QueryTexture(titleText, NULL, NULL, &textW, &textH);
+        graphics.renderTexture(titleText, SCREEN_WIDTH/2 - textW/2, 200);
+
+        const char* GameOverText;
+        if (currentMode == MODE_2_PLAYER)
+        {
+            if (redShip.isGameOver)
+            {
+                GameOverText = "BLUE WON!";
+                color = {0, 0, 255};
+            }
+            else if (blueShip.isGameOver)
+            {
+                GameOverText = "RED WON!";
+                color = {255, 0, 0};
+            }
+            // else GameOverText = "???";
+        }
+
+        else
+        {
+            if (redShip.isGameOver)
+            {
+                GameOverText = "YOU LOSE :(";
+                color = {255, 172, 28};
+            }
+            else if (blueShip.isGameOver)
+            {
+                GameOverText = "YOU WIN!";
+                color = {255, 172, 28};
+            }
+            // else GameOverText = "???";
+        }
+
+        SDL_Texture* winningText = graphics.renderText(GameOverText, titleFont, color);
+        int winW, winH;
+        SDL_QueryTexture(winningText, NULL, NULL, &winW, &winH);
+        graphics.renderTexture(winningText, SCREEN_WIDTH/2 - winW/2, 500);
+
+        graphics.presentScene();
+
+        SDL_DestroyTexture(titleText);
+        SDL_DestroyTexture(winningText);
+
+        SDL_Delay(10);
+    }
+
+    SDL_DestroyTexture(bgr);
 }
 
 #endif // _MENU__H
