@@ -5,17 +5,6 @@
 #define SCREEN_WIDTH 350
 #define SCREEN_HEIGHT 750
 
-#define INGAME_BACKGROUND_IMG "assets/background_ingame.png"
-#define BLUE_SHIP_IMG "assets/blue_ship.png"
-#define RED_SHIP_IMG "assets/red_ship.png"
-#define BULLET_IMG "assets/bullet.png"
-#define HEART_IMG "assets/Heart.png"
-#define HEALTH_BAR_IMG "assets/health_bar.png"
-#define BUTTON_IMG "assets/button.png"
-#define FONT "assets/Purisa-BoldOblique.ttf"
-#define MENU_BACKGROUND_IMG "assets/menu_background.png"
-#define TUTORIAL_IMG "assets/tutorial.png"
-
 const int INGAME_BACKGROUND_SCROLLING_SPEED = 1;
 const int INGAME_BACKGROUND_WIDTH = 350;
 const int INGAME_BACKGROUND_HEIGHT = 750;
@@ -58,6 +47,5 @@ const int BUTTON_HEIGHT = 57;
 const int BUTTON_COORDINATE_X = 70;
 const int BUTTON_COORDINATE_Y = 455;
 
-// 455 740
-// 70 210 70
+const float VERY_NEAR_ZERO_NUMBER = 0.3;
 #endif

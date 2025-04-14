@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Assets.h" />
+		<Unit filename="GameState.h" />
 		<Unit filename="background.h" />
 		<Unit filename="bullet.h" />
 		<Unit filename="collision.h" />
@@ -42,6 +43,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.h" />
 		<Unit filename="ship_motion.h" />
+		<Unit filename="sound.h" />
 		<Unit filename="time.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

@@ -42,8 +42,6 @@ struct BlueShip
             shiftCollider();
         }
 
-    ~BlueShip(){}
-
     void handleEvent(SDL_Event& e)
     {
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
@@ -141,8 +139,6 @@ struct RedShip
 
             shiftCollider();
         }
-
-    ~RedShip(){}
 
     void handleEvent(SDL_Event& e)
     {

@@ -1,14 +1,15 @@
 # depslib dependency file v1.0
-1744444448 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
+1744637504 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
 	"game.h"
 
-1744078182 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
+1744619501 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
+	<SDL_mixer.h>
 	"defs.h"
 
-1744552854 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+1744637996 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
 
 1743215108 source:e:\it\sdl\gameproject_uet_semester2_2025\src\main.cpp
 	<iostream>
@@ -24,22 +25,24 @@
 
 1743214549 e:\it\sdl\gameproject_uet_semester2_2025\src\defs.h
 
-1744555694 e:\it\sdl\gameproject_uet_semester2_2025\background.h
+1744616556 e:\it\sdl\gameproject_uet_semester2_2025\background.h
 	<iostream>
 	"graphics.h"
 	"defs.h"
 	"Assets.h"
 
-1744555893 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
+1744616568 e:\it\sdl\gameproject_uet_semester2_2025\ship_motion.h
 	<iostream>
 	<vector>
 	"defs.h"
 	"graphics.h"
 	"Assets.h"
 
-1744555390 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1744642380 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
 	<ctime>
 	<cstdlib>
 	"graphics.h"
@@ -50,8 +53,10 @@
 	"time.h"
 	"menu.h"
 	"Assets.h"
+	"sound.h"
+	"GameState.h"
 
-1744554479 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
+1744617472 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
 	<vector>
 	<iostream>
 	<cmath>
@@ -81,13 +86,22 @@
 	"bullet.h"
 	"defs.h"
 
-1744555893 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
+1744641079 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
 	"graphics.h"
 	"background.h"
 	"ship_motion.h"
 	"bullet.h"
 	"Assets.h"
+	"sound.h"
+	"GameState.h"
 
-1744554356 e:\it\sdl\gameproject_uet_semester2_2025\assets.h
+1744635661 e:\it\sdl\gameproject_uet_semester2_2025\assets.h
 	"graphics.h"
+
+1744641236 e:\it\sdl\gameproject_uet_semester2_2025\sound.h
+	"graphics.h"
+	"Assets.h"
+	"GameState.h"
+
+1744641029 e:\it\sdl\gameproject_uet_semester2_2025\gamestate.h
 

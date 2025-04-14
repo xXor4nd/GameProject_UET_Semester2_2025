@@ -6,23 +6,8 @@
 #include "ship_motion.h"
 #include "bullet.h"
 #include "Assets.h"
-
-enum GameState
-{
-    MENU,
-    PLAY,
-    GAMEMODE,
-    TUTORIAL,
-    EXIT,
-    PAUSED,
-    GAME_OVER
-};
-
-enum GameMode
-{
-    MODE_1_PLAYER,
-    MODE_2_PLAYER
-};
+#include "sound.h"
+#include "GameState.h"
 
 struct Button
 {
@@ -339,7 +324,7 @@ void handleGameStateGamemode(Graphics& graphics, Asset& assets, GameState& curre
     }
 }
 
-void handleGameStatePaused(Graphics& graphics, Asset& assets, GameState& currentState, bool& replayRequested)
+void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, GameState& currentState, bool& replayRequested)
 {
     SDL_Texture* bgr = assets.background;
 
@@ -385,6 +370,7 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, GameState& current
                             case 1:
                                 currentState = PLAY;
                                 replayRequested = true;
+                                sounds.stopMusic();
                                 break;
                             case 2:
                                 currentState = MENU;

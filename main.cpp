@@ -5,7 +5,24 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     srand(time(NULL));
-    Game();
+
+    Graphics graphics;
+    graphics.init();
+
+    Asset assets(graphics);
+    assets.loadAllAssets();
+
+    ScrollingBackground bgr(graphics, assets);
+    BlueShip blueShip(graphics, assets, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT);
+    RedShip redShip(graphics, assets, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d);
+    Bullet bullet(graphics, assets);
+
+    graphics.prepareScene();
+
+    gameLoop(graphics, assets, bgr, blueShip, redShip, bullet);
+
+    assets.clean();
+    graphics.quit();
 
     return 0;
 }

@@ -20,8 +20,6 @@ struct ScrollingBackground
         IngameBackground = assets.background;
     }
 
-    ~ScrollingBackground() {}
-
     void renderBackground (int INGAME_BACKGROUND_SCROLLING_SPEED)
     {
         scrollingOffset += INGAME_BACKGROUND_SCROLLING_SPEED;
