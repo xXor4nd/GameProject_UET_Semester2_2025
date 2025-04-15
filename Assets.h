@@ -33,6 +33,7 @@ struct Asset
     Mix_Chunk* hoverSound = NULL;
     Mix_Chunk* loseSound = NULL;
     Mix_Chunk* winSound = NULL;
+    Mix_Chunk* gamepointSound = NULL;
 
     Asset(Graphics& g) : graphics(g) {}
 
@@ -61,6 +62,7 @@ struct Asset
         hoverSound = graphics.loadSound("assets/sound/hover_sound.wav");
         loseSound = graphics.loadSound("assets/sound/lose_sound.wav");
         winSound = graphics.loadSound("assets/sound/win_sound.wav");
+        gamepointSound = graphics.loadSound("assets/sound/gamepoint_sound.wav");
     }
 
     void clean()
@@ -85,6 +87,7 @@ struct Asset
         Mix_FreeChunk(hoverSound);
         Mix_FreeChunk(loseSound);
         Mix_FreeChunk(winSound);
+        Mix_FreeChunk(gamepointSound);
     }
 };
 

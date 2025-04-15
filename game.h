@@ -19,12 +19,10 @@
 #include "sound.h"
 #include "GameState.h"
 
-void gameLoop(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet)
+void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet)
 {
     GameState currentState = MENU;
     GameMode currentMode = MODE_1_PLAYER;
-
-    Sound sounds(graphics, assets);
 
     while (currentState != EXIT)
     {
@@ -38,9 +36,9 @@ void gameLoop(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueS
                 break;
             case PLAY:
                 if (currentMode == MODE_1_PLAYER)
-                    handleGameStatePlay1P(graphics, bgr, blueShip, redShip, bullet, currentState);
+                    handleGameStatePlay1P(graphics, assets, bgr, blueShip, redShip, bullet, currentState);
                 else
-                    handleGameStatePlay2P(graphics, bgr, blueShip, redShip, bullet, currentState);
+                    handleGameStatePlay2P(graphics, assets, bgr, blueShip, redShip, bullet, currentState);
                 break;
             case GAMEMODE:
                 handleGameStateGamemode(graphics, assets, currentState, currentMode);
@@ -56,8 +54,8 @@ void gameLoop(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueS
                     {
                         resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
                     }
+                    break;
                 }
-                break;
             case GAME_OVER:
                 handleGameStateGameOver(graphics, assets, currentState, bullet, redShip, blueShip, currentMode);
                 break;

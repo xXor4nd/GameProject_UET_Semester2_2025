@@ -100,7 +100,15 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentSt
             {
                 int mx = e.motion.x, my = e.motion.y;
                 for (auto& tmp : buttons)
+                {
+                    bool prevState = tmp.isWithin;
                     tmp.isWithin = tmp.isInside(mx, my);
+
+                    if (!prevState && tmp.isWithin)
+                    {
+                        graphics.play(assets.hoverSound);
+                    }
+                }
             }
 
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
@@ -111,10 +119,10 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentSt
                     {
                         switch (i)
                         {
-                            case 0: currentState = PLAY; break;
-                            case 1: currentState = GAMEMODE; break;
-                            case 2: currentState = TUTORIAL; break;
-                            case 3: currentState = EXIT; break;
+                            case 0: currentState = PLAY; graphics.play(assets.clickedSound); break;
+                            case 1: currentState = GAMEMODE; graphics.play(assets.clickedSound); break;
+                            case 2: currentState = TUTORIAL; graphics.play(assets.clickedSound); break;
+                            case 3: currentState = EXIT; graphics.play(assets.clickedSound); break;
                         }
                         quit = true;
                     }
@@ -131,7 +139,7 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentSt
     }
 }
 
-void handleGameStatePlay2P(Graphics& graphics, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet, GameState& currentState)
+void handleGameStatePlay2P(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet, GameState& currentState)
 {
     SDL_Event e;
     bool quit = false;
@@ -162,12 +170,14 @@ void handleGameStatePlay2P(Graphics& graphics, ScrollingBackground& bgr, BlueShi
 
         if (blueShip.isGameOver)
         {
+            graphics.play(assets.gameoverSound);
             SDL_Delay(1500);
             currentState = GAME_OVER;
             quit = true;
         }
         else if (redShip.isGameOver)
         {
+            graphics.play(assets.gameoverSound);
             SDL_Delay(1500);
             currentState = GAME_OVER;
             quit = true;
@@ -188,7 +198,7 @@ void handleGameStatePlay2P(Graphics& graphics, ScrollingBackground& bgr, BlueShi
     }
 }
 
-void handleGameStatePlay1P(Graphics& graphics, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet, GameState& currentState)
+void handleGameStatePlay1P(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet, GameState& currentState)
 {
     SDL_Event e;
     bool quit = false;
@@ -231,12 +241,14 @@ void handleGameStatePlay1P(Graphics& graphics, ScrollingBackground& bgr, BlueShi
 
         if (blueShip.isGameOver)
         {
+            graphics.play(assets.gameoverSound);
             SDL_Delay(1500);
             currentState = GAME_OVER;
             quit = true;
         }
         else if (redShip.isGameOver)
         {
+            graphics.play(assets.gameoverSound);
             SDL_Delay(1500);
             currentState = GAME_OVER;
             quit = true;
@@ -289,7 +301,15 @@ void handleGameStateGamemode(Graphics& graphics, Asset& assets, GameState& curre
             {
                 int mx = e.motion.x, my = e.motion.y;
                 for (auto& tmp : buttons)
+                {
+                    bool prevState = tmp.isWithin;
                     tmp.isWithin = tmp.isInside(mx, my);
+
+                    if (!prevState && tmp.isWithin)
+                    {
+                        graphics.play(assets.hoverSound);
+                    }
+                }
             }
 
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
@@ -300,12 +320,14 @@ void handleGameStateGamemode(Graphics& graphics, Asset& assets, GameState& curre
                     {
                         if (i == 2)
                         {
+                            graphics.play(assets.clickedSound);
                             currentState = MENU;
                             quit = true;
                         }
                         else
                         {
                             selectedIndex = i;
+                            graphics.play(assets.clickedSound);
                             currentMode = (i == 0) ? MODE_1_PLAYER : MODE_2_PLAYER;
                             quit = true;
                         }
@@ -349,12 +371,22 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
                 currentState = EXIT;
                 quit = true;
             }
+
             else if (e.type == SDL_MOUSEMOTION)
             {
                 int mx = e.motion.x, my = e.motion.y;
-                for (auto& btn : buttons)
-                    btn.isWithin = btn.isInside(mx, my);
+                for (auto& tmp : buttons)
+                {
+                    bool prevState = tmp.isWithin;
+                    tmp.isWithin = tmp.isInside(mx, my);
+
+                    if (!prevState && tmp.isWithin)
+                    {
+                        graphics.play(assets.hoverSound);
+                    }
+                }
             }
+
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
             {
                 for (int i = 0; i < 3; i++)
@@ -364,15 +396,18 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
                         switch (i)
                         {
                             case 0:
+                                graphics.play(assets.clickedSound);
                                 currentState = PLAY;
                                 replayRequested = false;
                                 break;
                             case 1:
+                                graphics.play(assets.clickedSound);
                                 currentState = PLAY;
                                 replayRequested = true;
                                 sounds.stopMusic();
                                 break;
                             case 2:
+                                graphics.play(assets.clickedSound);
                                 currentState = MENU;
                                 replayRequested = false;
                                 break;
@@ -448,6 +483,8 @@ void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& curre
 
     SDL_Event e;
     bool quit = false;
+    bool isPlayed = false;
+
 
     while (!quit)
     {
@@ -458,12 +495,22 @@ void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& curre
                 currentState = EXIT;
                 quit = true;
             }
+
             else if (e.type == SDL_MOUSEMOTION)
             {
                 int mx = e.motion.x, my = e.motion.y;
-                for (auto& btn : buttons)
-                    btn.isWithin = btn.isInside(mx, my);
+                for (auto& tmp : buttons)
+                {
+                    bool prevState = tmp.isWithin;
+                    tmp.isWithin = tmp.isInside(mx, my);
+
+                    if (!prevState && tmp.isWithin)
+                    {
+                        graphics.play(assets.hoverSound);
+                    }
+                }
             }
+
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
             {
                 for (int i = 0; i < 2; i++)
@@ -473,10 +520,12 @@ void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& curre
                         switch (i)
                         {
                             case 0:
+                                graphics.play(assets.clickedSound);
                                 currentState = PLAY;
                                 resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
                                 break;
                             case 1:
+                                graphics.play(assets.clickedSound);
                                 currentState = MENU;
                                 break;
                         }
@@ -529,6 +578,34 @@ void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& curre
                 color = {255, 172, 28};
             }
             // else GameOverText = "???";
+        }
+
+
+        if (!isPlayed)
+        {
+            if (currentMode == MODE_2_PLAYER)
+            {
+                if (redShip.isGameOver)
+                {
+                    graphics.play(assets.winSound);
+                }
+                else if (blueShip.isGameOver)
+                {
+                    graphics.play(assets.winSound);
+                }
+            }
+            else
+            {
+                if (redShip.isGameOver)
+                {
+                    graphics.play(assets.loseSound);
+                }
+                else if (blueShip.isGameOver)
+                {
+                    graphics.play(assets.winSound);
+                }
+            }
+            isPlayed = true;
         }
 
         SDL_Texture* winningText = graphics.renderText(GameOverText, titleFont, color);

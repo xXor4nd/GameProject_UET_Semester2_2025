@@ -12,6 +12,8 @@ int main(int argc, char* argv[])
     Asset assets(graphics);
     assets.loadAllAssets();
 
+    Sound sounds(graphics, assets);
+
     ScrollingBackground bgr(graphics, assets);
     BlueShip blueShip(graphics, assets, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT);
     RedShip redShip(graphics, assets, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d);
@@ -19,7 +21,7 @@ int main(int argc, char* argv[])
 
     graphics.prepareScene();
 
-    gameLoop(graphics, assets, bgr, blueShip, redShip, bullet);
+    gameLoop(graphics, assets, sounds, bgr, blueShip, redShip, bullet);
 
     assets.clean();
     graphics.quit();

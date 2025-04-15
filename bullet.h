@@ -11,6 +11,7 @@
 #include "collision.h"
 #include "time.h"
 #include "Assets.h"
+#include "sound.h"
 
 using namespace std;
 
@@ -80,6 +81,7 @@ struct Bullet
                 dx = dx > 0 ? dx + 0.2 : dx - 0.2;
 
                 shiftCollider();
+                graphics.play(assets.collisionSound);
             }
 
             y += dy;
@@ -102,6 +104,7 @@ struct Bullet
                 dy = dy > 0 ? dy + 0.2 : dy - 0.2;
 
                 shiftCollider();
+                graphics.play(assets.collisionSound);
             }
 
             if ((collidedX ^ collidedY))
@@ -130,9 +133,10 @@ struct Bullet
                 justCollided = false;
             }
 
-            const int DEADZONE_Y = 10;
+            const int DEADZONE_Y = 7;
             if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
             {
+                graphics.play(assets.gamepointSound);
                 if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
                     blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
                 else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)

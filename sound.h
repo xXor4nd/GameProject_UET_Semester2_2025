@@ -21,6 +21,7 @@ struct Sound
     Mix_Chunk* hoverSound = NULL;
     Mix_Chunk* loseSound = NULL;
     Mix_Chunk* winSound = NULL;
+    Mix_Chunk* gamepointSound = NULL;
 
     Mix_Music* currentPlaying = NULL;
     bool isPaused = false;
@@ -36,6 +37,7 @@ struct Sound
         hoverSound = assets.hoverSound;
         loseSound = assets.loseSound;
         winSound = assets.winSound;
+        gamepointSound = assets.gamepointSound;
     }
 
     void stopMusic()
