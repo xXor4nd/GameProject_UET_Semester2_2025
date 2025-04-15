@@ -25,6 +25,10 @@ struct Sound
 
     Mix_Music* currentPlaying = NULL;
     bool isPaused = false;
+    bool isMuted_menuMusic = false;
+    bool bgmMuted = false;
+    bool collisionMuted = false;
+    bool pointMuted = false;
 
     Sound(Graphics& g, Asset& _assets) : graphics(g), assets(_assets)
     {
@@ -77,7 +81,31 @@ struct Sound
         }
     }
 
-    void playMusicforState(GameState& currentState)
+    void toggleMuteMenuMusic()
+    {
+        isMuted_menuMusic = !isMuted_menuMusic;
+        if (isMuted_menuMusic) Mix_VolumeMusic(0);
+        else Mix_VolumeMusic(MIX_MAX_VOLUME);
+        updateVolume();
+    }
+
+    void updateVolume()
+    {
+        if (currentPlaying == ingameMusic)
+        {
+            Mix_VolumeMusic(bgmMuted ? 0 : MIX_MAX_VOLUME);
+        }
+        else if (currentPlaying == menuMusic)
+        {
+            Mix_VolumeMusic(isMuted_menuMusic ? 0 : MIX_MAX_VOLUME);
+        }
+        else
+        {
+            Mix_VolumeMusic(MIX_MAX_VOLUME);
+        }
+    }
+
+    void playMusicforState(GameState currentState)
     {
         switch (currentState)
         {
@@ -95,6 +123,7 @@ struct Sound
                 switchMusicTo(menuMusic);
                 break;
         }
+        updateVolume();
     }
 };
 

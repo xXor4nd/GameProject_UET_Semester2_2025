@@ -75,9 +75,10 @@ void resetGame(Bullet& bullet, BlueShip& blueShip, RedShip& redShip, int& blueHe
     startTime = SDL_GetTicks();
 }
 
-void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentState)
+void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameState& currentState)
 {
     SDL_Texture* menuBackground = assets.menuBackground;
+    SDL_Rect soundButton = { 10, SCREEN_HEIGHT - 34, 24, 24 };
 
     Button buttons[4] = { Button(graphics, assets), Button(graphics, assets), Button(graphics, assets), Button(graphics, assets) };
     const char* labels[4] = {"PLAY", "GAMEMODE", "TUTORIAL", "EXIT"};
@@ -94,7 +95,12 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentSt
     {
         while (SDL_PollEvent(&e))
         {
-            if (e.type == SDL_QUIT) quit = true;
+            if (e.type == SDL_QUIT)
+            {
+                currentState = EXIT;
+                quit = true;
+            }
+
 
             else if (e.type == SDL_MOUSEMOTION)
             {
@@ -127,6 +133,12 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentSt
                         quit = true;
                     }
                 }
+
+                int mx = e.button.x, my = e.button.y;
+                if (mx >= soundButton.x && mx <= soundButton.x + soundButton.w && my >= soundButton.y && my <= soundButton.y + soundButton.h)
+                {
+                    sounds.toggleMuteMenuMusic();
+                }
             }
         }
 
@@ -135,6 +147,10 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, GameState& currentSt
         {
             buttons[i].render();
         }
+
+        if (sounds.isMuted_menuMusic) graphics.renderTexture(assets.volume_off, soundButton.x, soundButton.y);
+        else graphics.renderTexture(assets.volume_on, soundButton.x, soundButton.y);
+
         graphics.presentScene();
     }
 }
@@ -359,6 +375,10 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
         buttons[i].rect = {BUTTON_COORDINATE_X, 289 + i * 57, BUTTON_WIDTH, BUTTON_HEIGHT};
     }
 
+    SDL_Rect bgmBox = {65, 140, 24, 24};
+    SDL_Rect collisionBox = {65, 190, 24, 24};
+    SDL_Rect pointBox = {65, 240, 24, 24};
+
     SDL_Event e;
     bool quit = false;
 
@@ -379,40 +399,54 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
                 {
                     bool prevState = tmp.isWithin;
                     tmp.isWithin = tmp.isInside(mx, my);
-
                     if (!prevState && tmp.isWithin)
-                    {
                         graphics.play(assets.hoverSound);
-                    }
                 }
             }
 
             else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
             {
-                for (int i = 0; i < 3; i++)
+                int mx = e.button.x, my = e.button.y;
+                if (mx >= bgmBox.x && mx <= bgmBox.x + bgmBox.w && my >= bgmBox.y && my <= bgmBox.y + bgmBox.h)
                 {
-                    if (buttons[i].isWithin)
+                    sounds.bgmMuted = !sounds.bgmMuted;
+                    if (sounds.bgmMuted) Mix_VolumeMusic(0);
+                    else Mix_VolumeMusic(MIX_MAX_VOLUME);
+                    sounds.updateVolume();
+                }
+                else if (mx >= collisionBox.x && mx <= collisionBox.x + collisionBox.w && my >= collisionBox.y && my <= collisionBox.y + collisionBox.h)
+                {
+                    sounds.collisionMuted = !sounds.collisionMuted;
+                }
+                else if (mx >= pointBox.x && mx <= pointBox.x + pointBox.w && my >= pointBox.y && my <= pointBox.y + pointBox.h)
+                {
+                    sounds.pointMuted = !sounds.pointMuted;
+                }
+                else
+                {
+                    for (int i = 0; i < 3; i++)
                     {
-                        switch (i)
+                        if (buttons[i].isWithin)
                         {
-                            case 0:
-                                graphics.play(assets.clickedSound);
-                                currentState = PLAY;
-                                replayRequested = false;
-                                break;
-                            case 1:
-                                graphics.play(assets.clickedSound);
-                                currentState = PLAY;
-                                replayRequested = true;
-                                sounds.stopMusic();
-                                break;
-                            case 2:
-                                graphics.play(assets.clickedSound);
-                                currentState = MENU;
-                                replayRequested = false;
-                                break;
+                            graphics.play(assets.clickedSound);
+                            switch (i)
+                            {
+                                case 0:
+                                    currentState = PLAY;
+                                    replayRequested = false;
+                                    break;
+                                case 1:
+                                    currentState = PLAY;
+                                    replayRequested = true;
+                                    sounds.stopMusic();
+                                    break;
+                                case 2:
+                                    currentState = MENU;
+                                    replayRequested = false;
+                                    break;
+                            }
+                            quit = true;
                         }
-                        quit = true;
                     }
                 }
             }
@@ -424,16 +458,32 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
             buttons[i].render();
         }
 
-        TTF_Font* titleFont = assets.font40;
-        SDL_Color color = {255, 255, 255};
-        SDL_Texture* titleText = graphics.renderText("GAME PAUSED", titleFont, color);
+        TTF_Font* font = assets.font20;
+        SDL_Color white = {255, 255, 255};
+        SDL_Texture* text1 = graphics.renderText("Background Music", font, white);
+        SDL_Texture* text2 = graphics.renderText("Collision Sound", font, white);
+        SDL_Texture* text3 = graphics.renderText("GamePoint Sound", font, white);
 
+        graphics.renderTexture(text1, 100, 140);
+        graphics.renderTexture(text2, 100, 190);
+        graphics.renderTexture(text3, 100, 240);
+
+        SDL_DestroyTexture(text1);
+        SDL_DestroyTexture(text2);
+        SDL_DestroyTexture(text3);
+
+        graphics.renderTexture(sounds.bgmMuted ? assets.uncheck_square : assets.checked_square, bgmBox.x, bgmBox.y);
+        graphics.renderTexture(sounds.collisionMuted ? assets.uncheck_square : assets.checked_square, collisionBox.x, collisionBox.y);
+        graphics.renderTexture(sounds.pointMuted ? assets.uncheck_square : assets.checked_square, pointBox.x, pointBox.y);
+
+        TTF_Font* titleFont = assets.font40;
+        SDL_Texture* titleText = graphics.renderText("GAME PAUSED", titleFont, white);
         int textW, textH;
         SDL_QueryTexture(titleText, NULL, NULL, &textW, &textH);
-        graphics.renderTexture(titleText, SCREEN_WIDTH/2 - textW/2, 180);
+        graphics.renderTexture(titleText, SCREEN_WIDTH/2 - textW/2, 60);
+        SDL_DestroyTexture(titleText);
 
         graphics.presentScene();
-        SDL_DestroyTexture(titleText);
     }
 }
 

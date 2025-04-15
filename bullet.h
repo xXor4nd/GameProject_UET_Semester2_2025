@@ -19,13 +19,14 @@ struct Bullet
 {
     Graphics& graphics;
     Asset& assets;
+    Sound& sounds;
     SDL_Texture* texture = NULL;
     float x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = 1.5;
     float y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = 1.5;
     bool justCollided = false;
     vector<SDL_Rect> mColliders;
 
-    Bullet(Graphics& g, Asset& _assets): graphics(g), assets(_assets)
+    Bullet(Graphics& g, Asset& _assets, Sound& _sounds): graphics(g), assets(_assets), sounds(_sounds)
     {
         texture = assets.bullet;
 
@@ -81,7 +82,7 @@ struct Bullet
                 dx = dx > 0 ? dx + 0.2 : dx - 0.2;
 
                 shiftCollider();
-                graphics.play(assets.collisionSound);
+                if (!sounds.collisionMuted) graphics.play(assets.collisionSound);
             }
 
             y += dy;
@@ -104,7 +105,7 @@ struct Bullet
                 dy = dy > 0 ? dy + 0.2 : dy - 0.2;
 
                 shiftCollider();
-                graphics.play(assets.collisionSound);
+                if (!sounds.collisionMuted) graphics.play(assets.collisionSound);
             }
 
             if ((collidedX ^ collidedY))
@@ -136,7 +137,7 @@ struct Bullet
             const int DEADZONE_Y = 7;
             if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
             {
-                graphics.play(assets.gamepointSound);
+                if (!sounds.pointMuted) graphics.play(assets.gamepointSound);
                 if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
                     blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
                 else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)

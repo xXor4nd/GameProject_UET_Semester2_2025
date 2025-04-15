@@ -19,10 +19,13 @@ struct Asset
     SDL_Texture* square = NULL;
     SDL_Texture* volume_off = NULL;
     SDL_Texture* volume_on = NULL;
+    SDL_Texture* uncheck_square = NULL;
+    SDL_Texture* checked_square = NULL;
 
     TTF_Font* font30 = NULL;
     TTF_Font* font40 = NULL;
     TTF_Font* font72 = NULL;
+    TTF_Font* font20 = NULL;
 
     Mix_Music* ingameMusic = NULL;
     Mix_Music* menuMusic = NULL;
@@ -48,10 +51,15 @@ struct Asset
         button = graphics.loadTexture("assets/img/button.png");
         menuBackground = graphics.loadTexture("assets/img/menu_background.png");
         tutorial = graphics.loadTexture("assets/img/tutorial.png");
+        volume_off = graphics.loadTexture("assets/img/volume_off.png");
+        volume_on = graphics.loadTexture("assets/img/volume_on.png");
+        uncheck_square = graphics.loadTexture("assets/img/uncheck_square.png");
+        checked_square = graphics.loadTexture("assets/img/checked_square.png");
 
         font30 = TTF_OpenFont("assets/font/Purisa-BoldOblique.ttf", 30);
         font40 = TTF_OpenFont("assets/font/Purisa-BoldOblique.ttf", 40);
         font72 = TTF_OpenFont("assets/font/Purisa-BoldOblique.ttf", 72);
+        font20 = TTF_OpenFont("assets/font/Purisa-BoldOblique.ttf", 20);
 
         ingameMusic = graphics.loadMusic("assets/sound/ingame_music.wav");
         menuMusic = graphics.loadMusic("assets/sound/menu_music.wav");
@@ -76,9 +84,14 @@ struct Asset
         SDL_DestroyTexture(button);
         SDL_DestroyTexture(menuBackground);
         SDL_DestroyTexture(tutorial);
+        SDL_DestroyTexture(volume_off);
+        SDL_DestroyTexture(volume_on);
+        SDL_DestroyTexture(uncheck_square);
+        SDL_DestroyTexture(checkedSquare);
         TTF_CloseFont(font30);
         TTF_CloseFont(font40);
         TTF_CloseFont(font72);
+        TTF_CloseFont(font20);
         Mix_FreeMusic(ingameMusic);
         Mix_FreeMusic(menuMusic);
         Mix_FreeChunk(clickedSound);

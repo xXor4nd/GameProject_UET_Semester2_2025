@@ -32,7 +32,7 @@ void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackgro
         {
             case MENU:
                 resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
-                handleGameStateMenu(graphics, assets, currentState);
+                handleGameStateMenu(graphics, assets, sounds, currentState);
                 break;
             case PLAY:
                 if (currentMode == MODE_1_PLAYER)
