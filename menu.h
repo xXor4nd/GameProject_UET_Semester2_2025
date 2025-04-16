@@ -468,10 +468,6 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
         graphics.renderTexture(text2, 100, 190);
         graphics.renderTexture(text3, 100, 240);
 
-        SDL_DestroyTexture(text1);
-        SDL_DestroyTexture(text2);
-        SDL_DestroyTexture(text3);
-
         graphics.renderTexture(sounds.bgmMuted ? assets.uncheck_square : assets.checked_square, bgmBox.x, bgmBox.y);
         graphics.renderTexture(sounds.collisionMuted ? assets.uncheck_square : assets.checked_square, collisionBox.x, collisionBox.y);
         graphics.renderTexture(sounds.pointMuted ? assets.uncheck_square : assets.checked_square, pointBox.x, pointBox.y);
@@ -481,9 +477,13 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
         int textW, textH;
         SDL_QueryTexture(titleText, NULL, NULL, &textW, &textH);
         graphics.renderTexture(titleText, SCREEN_WIDTH/2 - textW/2, 60);
-        SDL_DestroyTexture(titleText);
 
         graphics.presentScene();
+
+        SDL_DestroyTexture(titleText);
+        SDL_DestroyTexture(text1);
+        SDL_DestroyTexture(text2);
+        SDL_DestroyTexture(text3);
     }
 }
 

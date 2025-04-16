@@ -15,14 +15,6 @@ struct Sound
     Mix_Music* ingameMusic = NULL;
     Mix_Music* menuMusic = NULL;
 
-    Mix_Chunk* clickedSound = NULL;
-    Mix_Chunk* collisionSound = NULL;
-    Mix_Chunk* gameoverSound = NULL;
-    Mix_Chunk* hoverSound = NULL;
-    Mix_Chunk* loseSound = NULL;
-    Mix_Chunk* winSound = NULL;
-    Mix_Chunk* gamepointSound = NULL;
-
     Mix_Music* currentPlaying = NULL;
     bool isPaused = false;
     bool isMuted_menuMusic = false;
@@ -34,14 +26,6 @@ struct Sound
     {
         ingameMusic = assets.ingameMusic;
         menuMusic = assets.menuMusic;
-
-        clickedSound = assets.clickedSound;
-        collisionSound = assets.collisionSound;
-        gameoverSound = assets.gameoverSound;
-        hoverSound = assets.hoverSound;
-        loseSound = assets.loseSound;
-        winSound = assets.winSound;
-        gamepointSound = assets.gamepointSound;
     }
 
     void stopMusic()

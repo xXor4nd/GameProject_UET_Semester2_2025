@@ -35,9 +35,14 @@ struct BlueShip
 
             mBlueCollider.resize(3);
 
-            mBlueCollider[0] = {0, 0, 95, 1};
-            mBlueCollider[1] = {0, 0, 71, 5};
-            mBlueCollider[2] = {0, 0, 63, 4};
+            mBlueCollider[0].w = 95;
+            mBlueCollider[0].h = 1;
+
+            mBlueCollider[1].w = 71;
+            mBlueCollider[1].h = 5;
+
+            mBlueCollider[2].w = 63;
+            mBlueCollider[2].h = 4;
 
             shiftCollider();
         }
