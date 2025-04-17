@@ -58,5 +58,6 @@ const int BUTTON_HEIGHT = 57;
 const int BUTTON_COORDINATE_X = 70;
 const int BUTTON_COORDINATE_Y = 455;
 
-const float VERY_NEAR_ZERO_NUMBER = 0.3;
+// 455 740
+// 70 210 70
 #endif

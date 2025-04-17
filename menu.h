@@ -240,7 +240,7 @@ void handleGameStatePlay1P(Graphics& graphics, Asset& assets, ScrollingBackgroun
         int blueCenterX = blueShip.x + SHIP_WIDTH / 2;
         int bulletCenterX = bullet.x + BULLET_WIDTH / 2;
 
-        const int DEADZONE_X = 47;
+        const int DEADZONE_X = 0;
         if (bullet.dy < 0)
         {
             if (bulletCenterX < blueCenterX - DEADZONE_X)

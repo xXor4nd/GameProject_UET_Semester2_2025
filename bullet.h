@@ -57,67 +57,82 @@ struct Bullet
         }
     }
 
-void handleLogic(BlueShip& blueShip, RedShip& redShip)
-{
-    if (handleTimeInterval(graphics, assets) == 0)
+    void handleLogic(BlueShip& blueShip, RedShip& redShip)
     {
-        bool collidedX = false;
-        bool collidedY = false;
-
-        x += dx;
-        shiftCollider();
-
-        if (x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH)
+        if (handleTimeInterval(graphics, assets) == 0)
         {
-            x -= dx;
-            dx = -dx;
-            collidedX = true;
+            bool collidedX = false;
+            bool collidedY = false;
+
+            x += dx;
             shiftCollider();
-        }
 
-        y += dy;
-        shiftCollider();
+            if (x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH)
+            {
+                x -= dx;
+                dx = -dx;
+                collidedX = true;
+                shiftCollider();
+            }
 
-        if (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
-        {
-            y -= dy;
-            dy = -dy;
+            else if (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
+            {
+                x -= dx;
+                dx = -dx;
 
-            dy = dy > 0 ? dy + 0.2 : dy - 0.2;
+                dx = dx > 0 ? dx + 0.2 : dx - 0.2;
 
-            if (dy > 0) y += 1.5;
-            else y -= 1.5;
+                if (dx > 0) x += 1.5;
+                else x -= 1.5;
 
+                shiftCollider();
+                collidedX = true;
+                if (!sounds.collisionMuted) graphics.play(assets.collisionSound);
+            }
+
+            y += dy;
             shiftCollider();
-            collidedY = true;
-            if (!sounds.collisionMuted) graphics.play(assets.collisionSound);
-        }
+
+            if (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
+            {
+                y -= dy;
+                dy = -dy;
+
+                dy = dy > 0 ? dy + 0.2 : dy - 0.2;
+
+                if (dy > 0) y += 1.5;
+                else y -= 1.5;
+
+                shiftCollider();
+                collidedY = true;
+                if (!sounds.collisionMuted) graphics.play(assets.collisionSound);
+            }
 
 
-        if (collidedX && collidedY)
-        {
-            float curSpeed = sqrt(dx * dx + dy * dy);
-            GenerateRandomAngle(curSpeed);
-        }
+            if (collidedX && collidedY)
+            {
+                float curSpeed = sqrt(dx * dx + dy * dy);
+                GenerateRandomAngle(curSpeed);
+            }
 
-        const int DEADZONE_Y = 2;
-        if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
-        {
-            if (!sounds.pointMuted) graphics.play(assets.gamepointSound);
-            if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
-                blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
-            else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
-                redShip.healthLoss += HEALTH_BAR_WIDTH / 4;
+            const int DEADZONE_Y = 2;
+            if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
+            {
+                if (!sounds.pointMuted) graphics.play(assets.gamepointSound);
+                if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
+                    blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
+                else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
+                    redShip.healthLoss += HEALTH_BAR_WIDTH / 4;
 
-            x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;
-            y = SCREEN_HEIGHT / 2 - BULLET_HEIGHT / 2;
+                x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;
+                y = SCREEN_HEIGHT / 2 - BULLET_HEIGHT / 2;
 
-            GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.5);
-            startTime = SDL_GetTicks();
-            shiftCollider();
+                GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.5);
+                startTime = SDL_GetTicks();
+                shiftCollider();
+            }
         }
     }
-}
 
 
     void GenerateRandomAngle(float speed)
