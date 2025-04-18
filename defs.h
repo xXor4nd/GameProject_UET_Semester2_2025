@@ -58,6 +58,9 @@ const int BUTTON_HEIGHT = 57;
 const int BUTTON_COORDINATE_X = 70;
 const int BUTTON_COORDINATE_Y = 455;
 
+const int DEADZONE_X = 5;
+const int DEADZONE_Y = 2;
+
 // 455 740
 // 70 210 70
 #endif

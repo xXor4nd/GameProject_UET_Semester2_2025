@@ -19,7 +19,7 @@
 #include "sound.h"
 #include "GameState.h"
 
-void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet)
+void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, BulletManager& bulletManager)
 {
     GameState currentState = MENU;
     GameMode currentMode = MODE_1_PLAYER;
@@ -31,14 +31,14 @@ void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackgro
         switch (currentState)
         {
             case MENU:
-                resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
+                resetGame(bulletManager, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
                 handleGameStateMenu(graphics, assets, sounds, currentState);
                 break;
             case PLAY:
                 if (currentMode == MODE_1_PLAYER)
-                    handleGameStatePlay1P(graphics, assets, bgr, blueShip, redShip, bullet, currentState);
+                    handleGameStatePlay1P(graphics, assets, bgr, blueShip, redShip, bulletManager, currentState);
                 else
-                    handleGameStatePlay2P(graphics, assets, bgr, blueShip, redShip, bullet, currentState);
+                    handleGameStatePlay2P(graphics, assets, bgr, blueShip, redShip, bulletManager, currentState);
                 break;
             case GAMEMODE:
                 handleGameStateGamemode(graphics, assets, currentState, currentMode);
@@ -52,12 +52,12 @@ void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackgro
                     handleGameStatePaused(graphics, assets, sounds, currentState, replayRequested);
                     if (replayRequested)
                     {
-                        resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
+                        resetGame(bulletManager, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
                     }
                     break;
                 }
             case GAME_OVER:
-                handleGameStateGameOver(graphics, assets, currentState, bullet, redShip, blueShip, currentMode);
+                handleGameStateGameOver(graphics, assets, currentState, bulletManager, redShip, blueShip, currentMode);
                 break;
             default:
                 break;

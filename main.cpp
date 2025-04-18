@@ -17,11 +17,12 @@ int main(int argc, char* argv[])
     ScrollingBackground bgr(graphics, assets);
     BlueShip blueShip(graphics, assets, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT);
     RedShip redShip(graphics, assets, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d);
-    Bullet bullet(graphics, assets, sounds);
+
+    BulletManager bulletManager(graphics, assets, sounds);
 
     graphics.prepareScene();
 
-    gameLoop(graphics, assets, sounds, bgr, blueShip, redShip, bullet);
+    gameLoop(graphics, assets, sounds, bgr, blueShip, redShip, bulletManager);
 
     assets.clean();
     graphics.quit();

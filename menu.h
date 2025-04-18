@@ -8,6 +8,7 @@
 #include "Assets.h"
 #include "sound.h"
 #include "GameState.h"
+#include "defs.h"
 
 struct Button
 {
@@ -53,12 +54,18 @@ struct Button
 
 };
 
-void resetGame(Bullet& bullet, BlueShip& blueShip, RedShip& redShip, int& blueHealthLoss, int& redHealthLoss)
+void resetGame(BulletManager& bulletManager, BlueShip& blueShip, RedShip& redShip, int& blueHealthLoss, int& redHealthLoss)
 {
-    bullet.x = (SCREEN_WIDTH - BULLET_WIDTH) / 2;
-    bullet.y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2;
-    bullet.dx = 1.5;
-    bullet.dy = 1.5;
+    bulletManager.is2BulletsEvent = false;
+    bulletManager.bullet1.x = (SCREEN_WIDTH - BULLET_WIDTH) / 2;
+    bulletManager.bullet1.y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2;
+    bulletManager.bullet1.dx = BULLET_INITIAL_SPEED;
+    bulletManager.bullet1.dy = BULLET_INITIAL_SPEED;
+
+    bulletManager.bullet2.x = (SCREEN_WIDTH - BULLET_WIDTH) / 2;
+    bulletManager.bullet2.y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2;
+    bulletManager.bullet2.dx = BULLET_INITIAL_SPEED;
+    bulletManager.bullet2.dy = BULLET_INITIAL_SPEED;
 
     blueShip.x = 0;
     redShip.x = 0;
@@ -155,7 +162,7 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameS
     }
 }
 
-void handleGameStatePlay2P(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet, GameState& currentState)
+void handleGameStatePlay2P(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, BulletManager& bulletManager, GameState& currentState)
 {
     SDL_Event e;
     bool quit = false;
@@ -207,14 +214,15 @@ void handleGameStatePlay2P(Graphics& graphics, Asset& assets, ScrollingBackgroun
         redShip.move();
         redShip.render();
 
-        bullet.handleLogic(blueShip, redShip);
-        bullet.render();
+        bulletManager.update(blueShip, redShip);
+        bulletManager.handleLogic(blueShip, redShip);
+        bulletManager.render(blueShip, redShip);
 
         graphics.presentScene();
     }
 }
 
-void handleGameStatePlay1P(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, Bullet& bullet, GameState& currentState)
+void handleGameStatePlay1P(Graphics& graphics, Asset& assets, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, BulletManager& bulletManager, GameState& currentState)
 {
     SDL_Event e;
     bool quit = false;
@@ -238,14 +246,33 @@ void handleGameStatePlay1P(Graphics& graphics, Asset& assets, ScrollingBackgroun
         }
 
         int blueCenterX = blueShip.x + SHIP_WIDTH / 2;
-        int bulletCenterX = bullet.x + BULLET_WIDTH / 2;
+        int blueCenterY = blueShip.y + SHIP_HEIGHT / 2;
 
-        const int DEADZONE_X = 0;
-        if (bullet.dy < 0)
+        float minDist = 1e9;
+        float targetX = -1;
+
+        Bullet* bullets[] = { &bulletManager.bullet1, &bulletManager.bullet2 };
+        for (auto b : bullets)
         {
-            if (bulletCenterX < blueCenterX - DEADZONE_X)
+            if (!b->roundEnded && b->dy < 0)
+            {
+                float bulletCenterX = b->x + BULLET_WIDTH / 2;
+                float bulletCenterY = b->y + BULLET_HEIGHT / 2;
+
+                float dist = sqrt((bulletCenterX - blueCenterX) * (bulletCenterX - blueCenterX) + (bulletCenterY - blueCenterY) *  (bulletCenterY - blueCenterY) );
+
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    targetX = bulletCenterX;
+                }
+            }
+        }
+        if (targetX != -1)
+        {
+            if (targetX < blueCenterX - DEADZONE_X)
                 blueShip.dx = -SHIP_VELO;
-            else if (bulletCenterX > blueCenterX + DEADZONE_X)
+            else if (targetX > blueCenterX + DEADZONE_X)
                 blueShip.dx = SHIP_VELO;
             else
                 blueShip.dx = 0;
@@ -278,8 +305,9 @@ void handleGameStatePlay1P(Graphics& graphics, Asset& assets, ScrollingBackgroun
         redShip.move();
         redShip.render();
 
-        bullet.handleLogic(blueShip, redShip);
-        bullet.render();
+        bulletManager.update(blueShip, redShip);
+        bulletManager.handleLogic(blueShip, redShip);
+        bulletManager.render(blueShip, redShip);
 
         graphics.presentScene();
     }
@@ -518,7 +546,7 @@ void handleGameStateTutorial(Graphics& graphics, Asset& assets, GameState& curre
     }
 }
 
-void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& currentState, Bullet& bullet, RedShip& redShip, BlueShip& blueShip, GameMode& currentMode)
+void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& currentState, BulletManager& bulletManager, RedShip& redShip, BlueShip& blueShip, GameMode& currentMode)
 {
     SDL_Texture* bgr = assets.background;
 
@@ -572,7 +600,7 @@ void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& curre
                             case 0:
                                 graphics.play(assets.clickedSound);
                                 currentState = PLAY;
-                                resetGame(bullet, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
+                                resetGame(bulletManager, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
                                 break;
                             case 1:
                                 graphics.play(assets.clickedSound);

@@ -91,8 +91,15 @@ struct BlueShip
 
     void handleHealth()
     {
-        SDL_Rect health_bar_rect = { BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, HEALTH_BAR_WIDTH - healthLoss, HEALTH_BAR_HEIGHT};
-        if (HEALTH_BAR_WIDTH - healthLoss == 0) isGameOver = true;
+        if (healthLoss >= HEALTH_BAR_WIDTH)
+        {
+            healthLoss = HEALTH_BAR_WIDTH;
+            isGameOver = true;
+        }
+
+        int remainingHealth = max(0, HEALTH_BAR_WIDTH - healthLoss);
+        SDL_Rect health_bar_rect = { BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, remainingHealth, HEALTH_BAR_HEIGHT };
+
         SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(graphics.renderer, &health_bar_rect);
     }
@@ -189,8 +196,15 @@ struct RedShip
 
     void handleHealth()
     {
-        SDL_Rect health_bar_rect = { RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, HEALTH_BAR_WIDTH - healthLoss, HEALTH_BAR_HEIGHT};
-        if (HEALTH_BAR_WIDTH - healthLoss == 0) isGameOver = true;
+        if (healthLoss >= HEALTH_BAR_WIDTH)
+        {
+            healthLoss = HEALTH_BAR_WIDTH;
+            isGameOver = true;
+        }
+
+        int remainingHealth = max(0, HEALTH_BAR_WIDTH - healthLoss);
+        SDL_Rect health_bar_rect = { RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y, remainingHealth, HEALTH_BAR_HEIGHT };
+
         SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
         SDL_RenderFillRect(graphics.renderer, &health_bar_rect);
     }

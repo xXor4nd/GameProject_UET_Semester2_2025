@@ -24,6 +24,8 @@ struct Bullet
     float x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = BULLET_INITIAL_SPEED;
     float y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = BULLET_INITIAL_SPEED;
     vector<SDL_Rect> mColliders;
+    bool roundEnded = false;
+    bool isDamaged = false;
 
     Bullet(Graphics& g, Asset& _assets, Sound& _sounds): graphics(g), assets(_assets), sounds(_sounds)
     {
@@ -115,23 +117,37 @@ struct Bullet
                 GenerateRandomAngle(curSpeed);
             }
 
-            const int DEADZONE_Y = 2;
-            if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
+            roundEnded = (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y);
+
+            if (roundEnded && !isDamaged)
             {
-                if (!sounds.pointMuted) graphics.play(assets.gamepointSound);
+                if (!sounds.pointMuted)
+                    graphics.play(assets.gamepointSound);
+
                 if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
                     blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
                 else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
                     redShip.healthLoss += HEALTH_BAR_WIDTH / 4;
 
-                x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;
-                y = SCREEN_HEIGHT / 2 - BULLET_HEIGHT / 2;
-
-                GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.5);
-                startTime = SDL_GetTicks();
-                shiftCollider();
+                isDamaged = true;
             }
+
         }
+    }
+
+    void resetBullet(BlueShip& blueShip, RedShip& redShip)
+    {
+        x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;
+        y = SCREEN_HEIGHT / 2 - BULLET_HEIGHT / 2;
+
+        dx = BULLET_INITIAL_SPEED;
+        dy = BULLET_INITIAL_SPEED;
+
+        roundEnded = false;
+        isDamaged = false;
+
+        GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.5);
+        shiftCollider();
     }
 
 
@@ -142,9 +158,9 @@ struct Bullet
 
         int coin = rand() % 2;
         if (coin == 0)
-            angle = (rand() % 41 - 65) * M_PI / 180.0f; // [-65, -25]
+            angle = (rand() % 41 - 65) * M_PI / 180.0; // [-65, -25]
         else
-            angle = (rand() % 41 + 25) * M_PI / 180.0f; // [25, 65]
+            angle = (rand() % 41 + 25) * M_PI / 180.0; // [25, 65]
 
         dxNew = speed * cos(angle);
         dyNew = speed * sin(angle);
@@ -157,6 +173,71 @@ struct Bullet
     void render()
     {
         graphics.renderTexture(texture, x, y);
+    }
+};
+
+struct BulletManager
+{
+    Bullet bullet1;
+    Bullet bullet2;
+    Uint32 eventStartTime = 0;
+
+    bool is2BulletsEvent = false;
+
+    BulletManager(Graphics& graphics, Asset& assets, Sound& sounds)
+        : bullet1(graphics, assets, sounds), bullet2(graphics, assets, sounds) {}
+
+    void update(BlueShip& blueShip, RedShip& redShip)
+    {
+        if( !is2BulletsEvent && (HEALTH_BAR_WIDTH - blueShip.healthLoss <= HEALTH_BAR_WIDTH / 2) &&
+           (HEALTH_BAR_WIDTH - redShip.healthLoss <= HEALTH_BAR_WIDTH / 2))
+        {
+            is2BulletsEvent = true;
+            bullet1.dx = BULLET_INITIAL_SPEED + 0.5; bullet1.dy = BULLET_INITIAL_SPEED + 0.5;
+            bullet2.dx = BULLET_INITIAL_SPEED + 0.5; bullet2.dx = BULLET_INITIAL_SPEED + 0.5;
+            eventStartTime = SDL_GetTicks();
+        }
+    }
+
+    void handleLogic(BlueShip& blueShip, RedShip& redShip)
+    {
+        bullet1.handleLogic(blueShip, redShip);
+        if (is2BulletsEvent) bullet2.handleLogic(blueShip, redShip);
+    }
+
+    void render(BlueShip& blueShip, RedShip& redShip)
+    {
+        if (is2BulletsEvent && SDL_GetTicks() - eventStartTime <= 3000)
+        {
+            SDL_Color yellow = {255, 255, 0, 255};
+            SDL_Texture* textTexture = bullet1.graphics.renderText("EVENT: 2 BULLETS", bullet1.assets.font20, yellow);
+
+            if (textTexture)
+            {
+                int textW, textH;
+                SDL_QueryTexture(textTexture, NULL, NULL, &textW, &textH);
+                int textX = SCREEN_WIDTH / 2 - textW / 2;
+                int textY = SCREEN_HEIGHT / 2 - 100;
+
+                bullet1.graphics.renderTexture(textTexture, textX, textY);
+                SDL_DestroyTexture(textTexture);
+            }
+        }
+
+        if (!bullet1.roundEnded)
+            bullet1.render();
+
+        if (is2BulletsEvent && !bullet2.roundEnded)
+            bullet2.render();
+
+        if (bullet1.roundEnded && (!is2BulletsEvent || bullet2.roundEnded))
+        {
+            bullet1.resetBullet(blueShip, redShip);
+            if (is2BulletsEvent)
+                bullet2.resetBullet(blueShip, redShip);
+
+            startTime = SDL_GetTicks();
+        }
     }
 };
 
