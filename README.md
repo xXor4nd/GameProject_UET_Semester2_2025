@@ -4,7 +4,7 @@ MSV: 24021410
 
 I. Introduction
 - Game lấy ý tưởng từ game Pong, 1 game khá nổi tiếng những năm mà máy tính trò chơi arcade còn phổ biến
-- Đây là game đầu tiên em làm, không thể tránh khỏi những bug tiềm ẩn khi xây dựng :(
+- Đây là game đầu tiên em làm, không thể tránh khỏi những bug tiềm ẩn khi xây dựng :((
 - Điểm mong muốn đạt được: 9
 
 II. Gameplay
@@ -34,7 +34,7 @@ IV. Graphics introduction
 - Có màn hình GameOver
 
 V. Source tham khảo
-- 2 shipTexture là tự vẽ trên https://www.pixilart.com/ ( để có thể biết rõ các collider để xử lý va chạm )
+- 2 shipTexture và bulletTexture là tự vẽ trên https://www.pixilart.com/ ( để có thể biết rõ các collider để xử lý va chạm )
 - Các texture khác (máu, trái tim, ingameBackground, menuBackground) lấy từ nhiều nguồn trên mạng, Chat GPT gen ảnh,...
 - Âm thanh lấy từ https://freesound.org/, font chữ lấy trong file hướng dẫn sdl2 lập trình nâng cao cơ bản
 - Nguồn học chính:
