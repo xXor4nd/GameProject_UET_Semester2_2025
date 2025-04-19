@@ -5,6 +5,7 @@ MSV: 24021410
 I. Introduction
 - Game lấy ý tưởng từ game Pong, 1 game khá nổi tiếng những năm mà máy tính trò chơi arcade còn phổ biến
 - Đây là game đầu tiên em làm, không thể tránh khỏi những bug tiềm ẩn khi xây dựng :(
+- Điểm mong muốn đạt được: 9
 
 II. Gameplay
 - Người chơi điều khiển 2 ship: redShip và blueShip, đẩy bullet qua cho nhau.
