@@ -14,10 +14,12 @@ struct Button
 {
     Graphics& graphics;
     Asset& assets;
+
     SDL_Rect rect;
     const char* label;
     SDL_Texture* buttonIMG = NULL;
     TTF_Font* font;
+
     bool isWithin = false;
     bool isSelected = false;
 
@@ -56,16 +58,7 @@ struct Button
 
 void resetGame(BulletManager& bulletManager, BlueShip& blueShip, RedShip& redShip, int& blueHealthLoss, int& redHealthLoss)
 {
-    bulletManager.is2BulletsEvent = false;
-    bulletManager.bullet1.x = (SCREEN_WIDTH - BULLET_WIDTH) / 2;
-    bulletManager.bullet1.y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2;
-    bulletManager.bullet1.dx = BULLET_INITIAL_SPEED;
-    bulletManager.bullet1.dy = BULLET_INITIAL_SPEED;
-
-    bulletManager.bullet2.x = (SCREEN_WIDTH - BULLET_WIDTH) / 2;
-    bulletManager.bullet2.y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2;
-    bulletManager.bullet2.dx = BULLET_INITIAL_SPEED;
-    bulletManager.bullet2.dy = BULLET_INITIAL_SPEED;
+    bulletManager.resetRound(blueShip, redShip);
 
     blueShip.x = 0;
     redShip.x = 0;
@@ -79,7 +72,7 @@ void resetGame(BulletManager& bulletManager, BlueShip& blueShip, RedShip& redShi
     blueShip.isGameOver = false;
     redShip.isGameOver = false;
 
-    startTime = SDL_GetTicks();
+    bulletManager.startTime = SDL_GetTicks();
 }
 
 void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameState& currentState)
@@ -93,7 +86,7 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameS
     for (int i = 0; i < 4; i++)
     {
         buttons[i].label = labels[i];
-        buttons[i].rect = {BUTTON_COORDINATE_X, BUTTON_COORDINATE_Y + i * 57, BUTTON_WIDTH, BUTTON_HEIGHT};
+        buttons[i].rect = {BUTTON_COORDINATE_X, BUTTON_COORDINATE_Y + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT};
     }
 
     SDL_Event e;
@@ -214,7 +207,6 @@ void handleGameStatePlay2P(Graphics& graphics, Asset& assets, ScrollingBackgroun
         redShip.move();
         redShip.render();
 
-        bulletManager.update(blueShip, redShip);
         bulletManager.handleLogic(blueShip, redShip);
         bulletManager.render(blueShip, redShip);
 
@@ -305,7 +297,6 @@ void handleGameStatePlay1P(Graphics& graphics, Asset& assets, ScrollingBackgroun
         redShip.move();
         redShip.render();
 
-        bulletManager.update(blueShip, redShip);
         bulletManager.handleLogic(blueShip, redShip);
         bulletManager.render(blueShip, redShip);
 
@@ -324,7 +315,7 @@ void handleGameStateGamemode(Graphics& graphics, Asset& assets, GameState& curre
     for (int i = 0; i < 3; i++)
     {
         buttons[i].label = labels[i];
-        buttons[i].rect = {BUTTON_COORDINATE_X, 289 + i * 57, BUTTON_WIDTH, BUTTON_HEIGHT};
+        buttons[i].rect = {BUTTON_COORDINATE_X, 289 + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT};
     }
 
     SDL_Event e;
@@ -400,7 +391,7 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
     for (int i = 0; i < 3; i++)
     {
         buttons[i].label = labels[i];
-        buttons[i].rect = {BUTTON_COORDINATE_X, 289 + i * 57, BUTTON_WIDTH, BUTTON_HEIGHT};
+        buttons[i].rect = {BUTTON_COORDINATE_X, 289 + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT};
     }
 
     SDL_Rect bgmBox = {65, 140, 24, 24};
@@ -438,8 +429,6 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
                 if (mx >= bgmBox.x && mx <= bgmBox.x + bgmBox.w && my >= bgmBox.y && my <= bgmBox.y + bgmBox.h)
                 {
                     sounds.bgmMuted = !sounds.bgmMuted;
-                    if (sounds.bgmMuted) Mix_VolumeMusic(0);
-                    else Mix_VolumeMusic(MIX_MAX_VOLUME);
                     sounds.updateVolume();
                 }
                 else if (mx >= collisionBox.x && mx <= collisionBox.x + collisionBox.w && my >= collisionBox.y && my <= collisionBox.y + collisionBox.h)
@@ -556,7 +545,7 @@ void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& curre
     for (int i = 0; i < 2; i++)
     {
         buttons[i].label = labels[i];
-        buttons[i].rect = {BUTTON_COORDINATE_X, 318 + i * 57, BUTTON_WIDTH, BUTTON_HEIGHT};
+        buttons[i].rect = {BUTTON_COORDINATE_X, 318 + i * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT};
     }
 
     SDL_Event e;

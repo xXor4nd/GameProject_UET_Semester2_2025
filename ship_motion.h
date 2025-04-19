@@ -14,13 +14,15 @@ struct BlueShip
 {
     Graphics& graphics;
     Asset& assets;
+
     int x = 0, dx = 0;
     int y = BLUE_SHIP_RESTRICTED_LINE_Y;
+    int healthLoss = 0;
+    bool isGameOver = false;
+
     SDL_Texture* shipTexture = NULL;
     SDL_Texture* health_bar_texture = NULL;
     SDL_Texture* blue_heart = NULL;
-    int healthLoss = 0;
-    bool isGameOver = false;
 
     const int fixedY;
     SDL_Keycode leftKey, rightKey;
@@ -35,14 +37,9 @@ struct BlueShip
 
             mBlueCollider.resize(3);
 
-            mBlueCollider[0].w = 95;
-            mBlueCollider[0].h = 1;
-
-            mBlueCollider[1].w = 71;
-            mBlueCollider[1].h = 5;
-
-            mBlueCollider[2].w = 63;
-            mBlueCollider[2].h = 4;
+            mBlueCollider[0] = {0, 0, 95, 1};
+            mBlueCollider[1] = {0, 0, 71, 5};
+            mBlueCollider[2] = {0, 0, 63, 4};
 
             shiftCollider();
         }
@@ -93,7 +90,6 @@ struct BlueShip
     {
         if (healthLoss >= HEALTH_BAR_WIDTH)
         {
-            healthLoss = HEALTH_BAR_WIDTH;
             isGameOver = true;
         }
 
@@ -120,16 +116,19 @@ struct RedShip
 {
     Graphics& graphics;
     Asset& assets;
+
     int x = 0, dx = 0;
     int y = RED_SHIP_RESTRICTED_LINE_Y;
+    int healthLoss = 0;
+    bool isGameOver = false;
+
     SDL_Texture* shipTexture = NULL;
     SDL_Texture* health_bar_texture = NULL;
     SDL_Texture* red_heart = NULL;
-    int healthLoss = 0;
+
     const int fixedY;
     SDL_Keycode leftKey, rightKey;
     vector<SDL_Rect> mRedCollider;
-    bool isGameOver = false;
 
     RedShip(Graphics& g, Asset& _assets, const int yPos, SDL_Keycode left, SDL_Keycode right)
         : graphics(g), assets(_assets), fixedY(yPos), leftKey(left), rightKey(right)
@@ -140,14 +139,9 @@ struct RedShip
 
             mRedCollider.resize(3);
 
-            mRedCollider[0].w = 63;
-            mRedCollider[0].h = 4;
-
-            mRedCollider[1].w = 71;
-            mRedCollider[1].h = 5;
-
-            mRedCollider[2].w = 95;
-            mRedCollider[2].h = 1;
+            mRedCollider[0] = {0, 0, 63, 4};
+            mRedCollider[1] = {0, 0, 71, 5};
+            mRedCollider[2] = {0, 0, 95, 1};
 
             shiftCollider();
         }
@@ -198,7 +192,6 @@ struct RedShip
     {
         if (healthLoss >= HEALTH_BAR_WIDTH)
         {
-            healthLoss = HEALTH_BAR_WIDTH;
             isGameOver = true;
         }
 

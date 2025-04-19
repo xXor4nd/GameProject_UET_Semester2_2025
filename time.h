@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int handleTimeInterval(Graphics& graphics, Asset& assets)
+int handleTimeInterval(Graphics& graphics, Asset& assets, Uint32 startTime)
 {
     TTF_Font* font = assets.font72;
     SDL_Color color = {255, 255, 255, 100};

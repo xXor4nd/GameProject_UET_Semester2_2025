@@ -15,9 +15,9 @@
 #define MENU_BACKGROUND_IMG "assets/menu_background.png"
 #define TUTORIAL_IMG "assets/tutorial.png"
 
-const int INGAME_BACKGROUND_SCROLLING_SPEED = 1;
 const int INGAME_BACKGROUND_WIDTH = 350;
 const int INGAME_BACKGROUND_HEIGHT = 750;
+const int INGAME_BACKGROUND_SCROLLING_SPEED = 1;
 
 const int SHIP_WIDTH = 95;
 const int SHIP_HEIGHT = 95;
@@ -33,10 +33,9 @@ const int RED_SHIP_RESTRICTED_LINE_Y = SCREEN_HEIGHT - BLUE_SHIP_RESTRICTED_LINE
 
 const int BULLET_WIDTH = 19;
 const int BULLET_HEIGHT = 19;
-const float BULLET_INITIAL_SPEED = 1.5;
+const float BULLET_INITIAL_SPEED = 2;
 
 const int countdownTime = 3000;
-int startTime = 0;
 
 const int HEART_WIDTH = 25;
 const int HEART_HEIGHT = 25;
@@ -61,6 +60,6 @@ const int BUTTON_COORDINATE_Y = 455;
 const int DEADZONE_X = 5;
 const int DEADZONE_Y = 2;
 
-// 455 740
-// 70 210 70
+const float INITIAL_BULLET_DISTANCE_FROM_CENTER = 20;
+
 #endif

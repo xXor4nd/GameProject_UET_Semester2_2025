@@ -16,8 +16,10 @@ struct Sound
     Mix_Music* menuMusic = NULL;
 
     Mix_Music* currentPlaying = NULL;
+
     bool isPaused = false;
     bool isMuted_menuMusic = false;
+
     bool bgmMuted = false;
     bool collisionMuted = false;
     bool pointMuted = false;

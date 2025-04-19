@@ -17,7 +17,6 @@ int main(int argc, char* argv[])
     ScrollingBackground bgr(graphics, assets);
     BlueShip blueShip(graphics, assets, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT);
     RedShip redShip(graphics, assets, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d);
-
     BulletManager bulletManager(graphics, assets, sounds);
 
     graphics.prepareScene();

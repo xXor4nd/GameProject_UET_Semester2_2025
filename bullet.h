@@ -20,16 +20,18 @@ struct Bullet
     Graphics& graphics;
     Asset& assets;
     Sound& sounds;
-    SDL_Texture* texture = NULL;
+
     float x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = BULLET_INITIAL_SPEED;
     float y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = BULLET_INITIAL_SPEED;
-    vector<SDL_Rect> mColliders;
     bool roundEnded = false;
     bool isDamaged = false;
 
+    SDL_Texture* bulletTexture = NULL;
+    vector<SDL_Rect> mColliders;
+
     Bullet(Graphics& g, Asset& _assets, Sound& _sounds): graphics(g), assets(_assets), sounds(_sounds)
     {
-        texture = assets.bullet;
+        bulletTexture = assets.bullet;
 
         mColliders.resize(11);
 
@@ -59,12 +61,23 @@ struct Bullet
         }
     }
 
-    void handleLogic(BlueShip& blueShip, RedShip& redShip)
+    void pushOutOfCollider(const vector<SDL_Rect>& shipColliders)
     {
-        if (handleTimeInterval(graphics, assets) == 0)
+        while (checkCollision(mColliders, shipColliders))
+        {
+            x += (dx > 0 ? -1 : 1);
+            y += (dy > 0 ? -1 : 1);
+            shiftCollider();
+        }
+    }
+
+    void handleLogic(BlueShip& blueShip, RedShip& redShip, Uint32 startTime)
+    {
+        if (handleTimeInterval(graphics, assets, startTime) == 0)
         {
             bool collidedX = false;
             bool collidedY = false;
+            bool isPlayCollisionSound = false;
 
             x += dx;
             shiftCollider();
@@ -79,17 +92,19 @@ struct Bullet
 
             else if (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
             {
-                x -= dx;
-                dx = -dx;
-
-                dx = dx > 0 ? dx + 0.2 : dx - 0.2;
-
-                if (dx > 0) x += 1.5;
-                else x -= 1.5;
-
-                shiftCollider();
                 collidedX = true;
-                if (!sounds.collisionMuted) graphics.play(assets.collisionSound);
+                isPlayCollisionSound = true;
+
+                x -= dx;
+                shiftCollider();
+                pushOutOfCollider(blueShip.mBlueCollider);
+                pushOutOfCollider(redShip.mRedCollider);
+
+                dx = -dx;
+                do
+                {
+                    dx = dx > 0 ? dx + 0.2 : dx - 0.2;
+                } while (dx == 0);
             }
 
             y += dy;
@@ -97,17 +112,19 @@ struct Bullet
 
             if (checkCollision(mColliders, blueShip.mBlueCollider) || checkCollision(mColliders, redShip.mRedCollider))
             {
+                collidedY = true;
+                isPlayCollisionSound = true;
                 y -= dy;
+                shiftCollider();
+                pushOutOfCollider(blueShip.mBlueCollider);
+                pushOutOfCollider(redShip.mRedCollider);
+
                 dy = -dy;
 
-                dy = dy > 0 ? dy + 0.2 : dy - 0.2;
-
-                if (dy > 0) y += 1.5;
-                else y -= 1.5;
-
-                shiftCollider();
-                collidedY = true;
-                if (!sounds.collisionMuted) graphics.play(assets.collisionSound);
+                do
+                {
+                    dy = dy > 0 ? dy + 0.2 : dy - 0.2;
+                } while (dy == 0);
             }
 
 
@@ -117,21 +134,35 @@ struct Bullet
                 GenerateRandomAngle(curSpeed);
             }
 
+            if (isPlayCollisionSound && !sounds.collisionMuted)
+                graphics.play(assets.collisionSound);
+
+//           if (collidedX || collidedY)
+//           {
+//               cout << "Collision detected!" << endl;
+//               cout << "New dx = " << dx << ", dy = " << dy << endl;
+//           }
+
+//            if (collidedX && collidedY)
+//            {
+//                cout << "Double Collision detected!" << endl;
+//                cout << "New dx = " << dx << ", dy = " << dy << endl;
+//            }
+
             roundEnded = (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y || y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y);
+        }
 
-            if (roundEnded && !isDamaged)
-            {
-                if (!sounds.pointMuted)
-                    graphics.play(assets.gamepointSound);
+        if (roundEnded && !isDamaged)
+        {
+            if (!sounds.pointMuted)
+                graphics.play(assets.gamepointSound);
 
-                if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
-                    blueShip.healthLoss += HEALTH_BAR_WIDTH / 4;
-                else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
-                    redShip.healthLoss += HEALTH_BAR_WIDTH / 4;
+            if (y + BULLET_HEIGHT < BLUE_SHIP_RESTRICTED_LINE_Y - DEADZONE_Y)
+                blueShip.healthLoss += HEALTH_BAR_WIDTH / 6;
+            else if (y > RED_SHIP_RESTRICTED_LINE_Y + DEADZONE_Y)
+                redShip.healthLoss += HEALTH_BAR_WIDTH / 6;
 
-                isDamaged = true;
-            }
-
+            isDamaged = true;
         }
     }
 
@@ -140,9 +171,6 @@ struct Bullet
         x = SCREEN_WIDTH / 2 - BULLET_WIDTH / 2;
         y = SCREEN_HEIGHT / 2 - BULLET_HEIGHT / 2;
 
-        dx = BULLET_INITIAL_SPEED;
-        dy = BULLET_INITIAL_SPEED;
-
         roundEnded = false;
         isDamaged = false;
 
@@ -150,14 +178,13 @@ struct Bullet
         shiftCollider();
     }
 
-
     void GenerateRandomAngle(float speed)
     {
         float angle;
         float dxNew, dyNew;
 
         int coin = rand() % 2;
-        if (coin == 0)
+        if (coin & 1)
             angle = (rand() % 41 - 65) * M_PI / 180.0; // [-65, -25]
         else
             angle = (rand() % 41 + 25) * M_PI / 180.0; // [25, 65]
@@ -172,7 +199,7 @@ struct Bullet
 
     void render()
     {
-        graphics.renderTexture(texture, x, y);
+        graphics.renderTexture(bulletTexture, x, y);
     }
 };
 
@@ -180,29 +207,51 @@ struct BulletManager
 {
     Bullet bullet1;
     Bullet bullet2;
-    Uint32 eventStartTime = 0;
 
     bool is2BulletsEvent = false;
+    Uint32 eventStartTime = 0;
+    Uint32 startTime = 0;
 
     BulletManager(Graphics& graphics, Asset& assets, Sound& sounds)
         : bullet1(graphics, assets, sounds), bullet2(graphics, assets, sounds) {}
 
-    void update(BlueShip& blueShip, RedShip& redShip)
-    {
-        if( !is2BulletsEvent && (HEALTH_BAR_WIDTH - blueShip.healthLoss <= HEALTH_BAR_WIDTH / 2) &&
-           (HEALTH_BAR_WIDTH - redShip.healthLoss <= HEALTH_BAR_WIDTH / 2))
-        {
-            is2BulletsEvent = true;
-            bullet1.dx = BULLET_INITIAL_SPEED + 0.5; bullet1.dy = BULLET_INITIAL_SPEED + 0.5;
-            bullet2.dx = BULLET_INITIAL_SPEED + 0.5; bullet2.dx = BULLET_INITIAL_SPEED + 0.5;
-            eventStartTime = SDL_GetTicks();
-        }
-    }
-
     void handleLogic(BlueShip& blueShip, RedShip& redShip)
     {
-        bullet1.handleLogic(blueShip, redShip);
-        if (is2BulletsEvent) bullet2.handleLogic(blueShip, redShip);
+        bullet1.handleLogic(blueShip, redShip, startTime);
+        if (is2BulletsEvent) bullet2.handleLogic(blueShip, redShip, startTime);
+    }
+
+    void resetRound(BlueShip& blueShip, RedShip& redShip)
+    {
+        is2BulletsEvent = (rand() % 100 < 30);
+
+        if (!is2BulletsEvent)
+        {
+            bullet1.resetBullet(blueShip, redShip);
+        }
+        else
+        {
+            bullet1.resetBullet(blueShip, redShip);
+            bullet2.resetBullet(blueShip, redShip);
+            setBulletPosition();
+            eventStartTime = SDL_GetTicks();
+        }
+
+        startTime = SDL_GetTicks();
+    }
+
+    void setBulletPosition()
+    {
+        float centerX = SCREEN_WIDTH / 2.0 - BULLET_WIDTH / 2;
+        float centerY = SCREEN_HEIGHT / 2.0 - BULLET_HEIGHT / 2;
+        float h = INITIAL_BULLET_DISTANCE_FROM_CENTER;
+
+        bullet1.x = centerX - h;
+        bullet2.x = centerX + h;
+        bullet1.y = bullet2.y = centerY;
+
+        bullet1.shiftCollider();
+        bullet2.shiftCollider();
     }
 
     void render(BlueShip& blueShip, RedShip& redShip)
@@ -219,7 +268,7 @@ struct BulletManager
                 int textX = SCREEN_WIDTH / 2 - textW / 2;
                 int textY = SCREEN_HEIGHT / 2 - 100;
 
-                bullet1.graphics.renderTexture(textTexture, textX, textY);
+                bullet2.graphics.renderTexture(textTexture, textX, textY);
                 SDL_DestroyTexture(textTexture);
             }
         }
@@ -232,11 +281,7 @@ struct BulletManager
 
         if (bullet1.roundEnded && (!is2BulletsEvent || bullet2.roundEnded))
         {
-            bullet1.resetBullet(blueShip, redShip);
-            if (is2BulletsEvent)
-                bullet2.resetBullet(blueShip, redShip);
-
-            startTime = SDL_GetTicks();
+            resetRound(blueShip, redShip);
         }
     }
 };
