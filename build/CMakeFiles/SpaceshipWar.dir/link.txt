@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\SpaceshipWar.dir/objects.a
+C:\PROGRA~1\CODEBL~1\MinGW\bin\ar.exe qc CMakeFiles\SpaceshipWar.dir/objects.a @CMakeFiles\SpaceshipWar.dir\objects1.rsp
+C:\PROGRA~1\CODEBL~1\MinGW\bin\C__~1.EXE -mwindows -Wl,--whole-archive CMakeFiles\SpaceshipWar.dir/objects.a -Wl,--no-whole-archive -o SpaceshipWar.exe -Wl,--out-implib,libSpaceshipWar.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SpaceshipWar.dir\linkLibs.rsp

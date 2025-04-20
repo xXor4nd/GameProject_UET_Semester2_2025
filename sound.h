@@ -5,8 +5,6 @@
 #include "Assets.h"
 #include "GameState.h"
 
-enum GameState;
-
 struct Sound
 {
     Graphics& graphics;
@@ -23,6 +21,7 @@ struct Sound
     bool bgmMuted = false;
     bool collisionMuted = false;
     bool pointMuted = false;
+    const int LOW_VOLUME = MIX_MAX_VOLUME / 2;
 
     Sound(Graphics& g, Asset& _assets) : graphics(g), assets(_assets)
     {
@@ -83,11 +82,11 @@ struct Sound
         }
         else if (currentPlaying == menuMusic)
         {
-            Mix_VolumeMusic(isMuted_menuMusic ? 0 : MIX_MAX_VOLUME);
+            Mix_VolumeMusic(isMuted_menuMusic ? 0 : LOW_VOLUME);
         }
         else
         {
-            Mix_VolumeMusic(MIX_MAX_VOLUME);
+            Mix_VolumeMusic(LOW_VOLUME);
         }
     }
 

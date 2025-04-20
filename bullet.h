@@ -114,6 +114,7 @@ struct Bullet
             {
                 collidedY = true;
                 isPlayCollisionSound = true;
+
                 y -= dy;
                 shiftCollider();
                 pushOutOfCollider(blueShip.mBlueCollider);
