@@ -67,7 +67,7 @@ struct BlueShip
     void shiftCollider()
     {
         int tmp = 0;
-        for(int i = 0; i < (int)mBlueCollider.size(); i++)
+        for (int i = 0; i < (int)mBlueCollider.size(); i++)
         {
             mBlueCollider[i].x = x + (SHIP_WIDTH - mBlueCollider[i].w) / 2;
             mBlueCollider[i].y = y + tmp;
@@ -169,7 +169,7 @@ struct RedShip
     void shiftCollider()
     {
         int tmp = 0;
-        for(int i = 0; i < (int)mRedCollider.size(); i++)
+        for (int i = 0; i < (int)mRedCollider.size(); i++)
         {
             mRedCollider[i].x = x + (SHIP_WIDTH - mRedCollider[i].w) / 2;
             mRedCollider[i].y = y + tmp;

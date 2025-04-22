@@ -53,7 +53,7 @@ struct Bullet
     void shiftCollider()
     {
         int tmp = 0;
-        for(int i = 0; i < (int)mColliders.size(); i++)
+        for (int i = 0; i < (int)mColliders.size(); i++)
         {
             mColliders[i].x = x + (BULLET_WIDTH - mColliders[i].w) / 2;
             mColliders[i].y = y + tmp;

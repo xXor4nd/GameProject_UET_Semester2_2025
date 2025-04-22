@@ -105,12 +105,12 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameS
             else if (e.type == SDL_MOUSEMOTION)
             {
                 int mx = e.motion.x, my = e.motion.y;
-                for (auto& tmp : buttons)
+                for (auto& btn : buttons)
                 {
-                    bool prevState = tmp.isWithin;
-                    tmp.isWithin = tmp.isInside(mx, my);
+                    bool prevState = btn.isWithin;
+                    btn.isWithin = btn.isInside(mx, my);
 
-                    if (!prevState && tmp.isWithin)
+                    if (!prevState && btn.isWithin)
                     {
                         graphics.play(assets.hoverSound);
                     }
@@ -335,12 +335,12 @@ void handleGameStateGamemode(Graphics& graphics, Asset& assets, GameState& curre
             else if (e.type == SDL_MOUSEMOTION)
             {
                 int mx = e.motion.x, my = e.motion.y;
-                for (auto& tmp : buttons)
+                for (auto& btn : buttons)
                 {
-                    bool prevState = tmp.isWithin;
-                    tmp.isWithin = tmp.isInside(mx, my);
+                    bool prevState = btn.isWithin;
+                    btn.isWithin = btn.isInside(mx, my);
 
-                    if (!prevState && tmp.isWithin)
+                    if (!prevState && btn.isWithin)
                     {
                         graphics.play(assets.hoverSound);
                     }
@@ -414,11 +414,11 @@ void handleGameStatePaused(Graphics& graphics, Asset& assets, Sound& sounds, Gam
             else if (e.type == SDL_MOUSEMOTION)
             {
                 int mx = e.motion.x, my = e.motion.y;
-                for (auto& tmp : buttons)
+                for (auto& btn : buttons)
                 {
-                    bool prevState = tmp.isWithin;
-                    tmp.isWithin = tmp.isInside(mx, my);
-                    if (!prevState && tmp.isWithin)
+                    bool prevState = btn.isWithin;
+                    btn.isWithin = btn.isInside(mx, my);
+                    if (!prevState && btn.isWithin)
                         graphics.play(assets.hoverSound);
                 }
             }
@@ -566,12 +566,12 @@ void handleGameStateGameOver(Graphics& graphics, Asset& assets, GameState& curre
             else if (e.type == SDL_MOUSEMOTION)
             {
                 int mx = e.motion.x, my = e.motion.y;
-                for (auto& tmp : buttons)
+                for (auto& btn : buttons)
                 {
-                    bool prevState = tmp.isWithin;
-                    tmp.isWithin = tmp.isInside(mx, my);
+                    bool prevState = btn.isWithin;
+                    btn.isWithin = btn.isInside(mx, my);
 
-                    if (!prevState && tmp.isWithin)
+                    if (!prevState && btn.isWithin)
                     {
                         graphics.play(assets.hoverSound);
                     }
