@@ -1,5 +1,6 @@
 # Spaceship War
-Họ và tên: Đỗ Văn Đức  MSV: 24021410
+Họ và tên: Đỗ Văn Đức<br>
+MSV: 24021410
 
 I. Introduction
 - Game lấy ý tưởng từ game Pong, 1 game khá nổi tiếng những năm mà máy tính trò chơi arcade còn phổ biến
@@ -34,6 +35,7 @@ IV. Graphics introduction
 V. Source tham khảo
 - 2 shipTexture và bulletTexture là tự vẽ trên https://www.pixilart.com/ ( để có thể biết rõ các collider để xử lý va chạm )
 - Các texture khác (máu, trái tim, ingameBackground, menuBackground) lấy từ nhiều nguồn trên mạng, Chat GPT gen ảnh,...
+- Animation sparkle lấy từ https://itch.io/
 - Âm thanh lấy từ https://freesound.org/, font chữ lấy trong file hướng dẫn sdl2 lập trình nâng cao cơ bản
 - Nguồn học chính:
   + Docs lập trình nâng cao cơ bản được cung cấp
@@ -42,5 +44,18 @@ V. Source tham khảo
   + Sử dụng AI: Tham khảo idea, gen ảnh, rút ngắn 1 số đoạn code rườm rà mà ý nghĩa tương đương ( ở mức độ hiểu và tự triển khai phù hợp với cấu trúc game của mình )
 
 VI. Checklist
-Dùng các lệnh vẽ hình ✅  Texture ✅  Background ✅  Event bàn phím ✅  Event chuột ✅  Animation (hoạt hình) ✅  Xử lý va chạm ✅  Sound ✅  Sound on off ✅  Background music ✅  Font ✅  Menu ✅  Pause/Resume ✅  Status bar / lives (mạng/máu...) ✅
+Dùng các lệnh vẽ hình ✅<br>
+Texture ✅<br>
+Background ✅<br>
+Event bàn phím ✅<br>
+Event chuột ✅<br>
+Animation (hoạt hình) ✅<br>
+Xử lý va chạm ✅<br>
+Sound ✅<br>
+Sound on off ✅<br>
+Background music ✅<br>
+Font ✅<br>
+Menu ✅<br>
+Pause/Resume ✅<br>
+Status bar / lives (mạng/máu...) ✅
 
