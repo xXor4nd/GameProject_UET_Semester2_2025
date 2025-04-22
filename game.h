@@ -10,7 +10,7 @@
 
 #include "graphics.h"
 #include "defs.h"
-#include "background.h"
+#include "animation.h"
 #include "ship_motion.h"
 #include "bullet.h"
 #include "time.h"
@@ -19,7 +19,7 @@
 #include "sound.h"
 #include "GameState.h"
 
-void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackground& bgr, BlueShip& blueShip, RedShip& redShip, BulletManager& bulletManager)
+void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackground& bgr, Sparkle& sparkle, BlueShip& blueShip, RedShip& redShip, BulletManager& bulletManager)
 {
     GameState currentState = MENU;
     GameMode currentMode = MODE_1_PLAYER;
@@ -32,7 +32,7 @@ void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackgro
         {
             case MENU:
                 resetGame(bulletManager, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
-                handleGameStateMenu(graphics, assets, sounds, currentState);
+                handleGameStateMenu(graphics, assets, sounds, currentState, sparkle);
                 break;
             case PLAY:
                 if (currentMode == MODE_1_PLAYER)

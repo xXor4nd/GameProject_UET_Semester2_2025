@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1745030195 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
+1745324689 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
 	"game.h"
 
 1745278743 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
@@ -9,7 +9,7 @@
 	<SDL_mixer.h>
 	"defs.h"
 
-1745052088 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+1745324990 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
 
 1743215108 source:e:\it\sdl\gameproject_uet_semester2_2025\src\main.cpp
 	<iostream>
@@ -38,7 +38,7 @@
 	"graphics.h"
 	"Assets.h"
 
-1745051178 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1745324674 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -47,7 +47,7 @@
 	<cstdlib>
 	"graphics.h"
 	"defs.h"
-	"background.h"
+	"animation.h"
 	"ship_motion.h"
 	"bullet.h"
 	"time.h"
@@ -87,9 +87,9 @@
 	"bullet.h"
 	"defs.h"
 
-1745285601 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
+1745325186 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
 	"graphics.h"
-	"background.h"
+	"animation.h"
 	"ship_motion.h"
 	"bullet.h"
 	"Assets.h"
@@ -97,7 +97,7 @@
 	"GameState.h"
 	"defs.h"
 
-1744703970 e:\it\sdl\gameproject_uet_semester2_2025\assets.h
+1745326057 e:\it\sdl\gameproject_uet_semester2_2025\assets.h
 	"graphics.h"
 
 1745068831 e:\it\sdl\gameproject_uet_semester2_2025\sound.h
@@ -106,4 +106,11 @@
 	"GameState.h"
 
 1744641029 e:\it\sdl\gameproject_uet_semester2_2025\gamestate.h
+
+1745325676 e:\it\sdl\gameproject_uet_semester2_2025\animation.h
+	<iostream>
+	<vector>
+	"graphics.h"
+	"defs.h"
+	"Assets.h"
 

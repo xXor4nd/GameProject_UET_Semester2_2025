@@ -7,6 +7,7 @@ struct Asset
 {
     Graphics& graphics;
     SDL_Texture* background = NULL;
+    SDL_Texture* sparkle = NULL;
     SDL_Texture* blueShip = NULL;
     SDL_Texture* redShip = NULL;
     SDL_Texture* bullet = NULL;
@@ -43,6 +44,7 @@ struct Asset
     void loadAllAssets()
     {
         background = graphics.loadTexture("assets/img/background_ingame.png");
+        sparkle = graphics.loadTexture("assets/img/sparkle.png");
         blueShip = graphics.loadTexture("assets/img/blue_ship.png");
         redShip = graphics.loadTexture("assets/img/red_ship.png");
         bullet = graphics.loadTexture("assets/img/bullet.png");
@@ -76,6 +78,7 @@ struct Asset
     void clean()
     {
         SDL_DestroyTexture(background);
+        SDL_DestroyTexture(sparkle);
         SDL_DestroyTexture(blueShip);
         SDL_DestroyTexture(redShip);
         SDL_DestroyTexture(bullet);

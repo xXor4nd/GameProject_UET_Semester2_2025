@@ -2,7 +2,7 @@
 #define _MENU__H
 
 #include "graphics.h"
-#include "background.h"
+#include "animation.h"
 #include "ship_motion.h"
 #include "bullet.h"
 #include "Assets.h"
@@ -75,9 +75,10 @@ void resetGame(BulletManager& bulletManager, BlueShip& blueShip, RedShip& redShi
     bulletManager.startTime = SDL_GetTicks();
 }
 
-void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameState& currentState)
+void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameState& currentState, Sparkle& sparkle)
 {
     SDL_Texture* menuBackground = assets.menuBackground;
+    Uint32 prevTick = SDL_GetTicks();
     SDL_Rect soundButton = { 10, SCREEN_HEIGHT - 34, 24, 24 };
 
     Button buttons[4] = { Button(graphics, assets), Button(graphics, assets), Button(graphics, assets), Button(graphics, assets) };
@@ -147,6 +148,15 @@ void handleGameStateMenu(Graphics& graphics, Asset& assets, Sound& sounds, GameS
         {
             buttons[i].render();
         }
+
+        Uint32 now = SDL_GetTicks();
+        if (now - prevTick > 100)
+        {
+            sparkle.tick();
+            prevTick = now;
+        }
+        sparkle.renderSprite(10, 10);
+        sparkle.renderSprite(SCREEN_WIDTH - 10 - 32, 10);
 
         if (sounds.isMuted_menuMusic) graphics.renderTexture(assets.volume_off, soundButton.x, soundButton.y);
         else graphics.renderTexture(assets.volume_on, soundButton.x, soundButton.y);

@@ -34,7 +34,7 @@
 		</Compiler>
 		<Unit filename="Assets.h" />
 		<Unit filename="GameState.h" />
-		<Unit filename="background.h" />
+		<Unit filename="animation.h" />
 		<Unit filename="bullet.h" />
 		<Unit filename="collision.h" />
 		<Unit filename="defs.h" />
