@@ -43,8 +43,8 @@ V. Source tham khảo
   + Lazyfoo ( mainly Motion, Timing, MouseEvent, Per-Pixel Collision, Scrolling,.. )
   + Sử dụng AI: Tham khảo idea, gen ảnh, rút ngắn 1 số đoạn code rườm rà mà ý nghĩa tương đương ( ở mức độ hiểu và tự triển khai phù hợp với cấu trúc game của mình )
 
-VI. Checklist
-Dùng các lệnh vẽ hình ✅<br>
+VI. Checklist<br>
+Dùng các lệnh vẽ hình ✅✅<br>
 Texture ✅<br>
 Background ✅<br>
 Event bàn phím ✅<br>
