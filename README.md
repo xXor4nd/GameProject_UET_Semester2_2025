@@ -12,7 +12,7 @@ II. Gameplay
 - Bullet khi va chạm sẽ tăng dần vận tốc, và tuân theo định luật phản xạ ( edge case: khi bullet va chạm ở rìa ngoài ship, sẽ random góc bật ra )
 - Có 2 chế độ
   + Chế độ PVP: 2 người chơi điều khiển 2 ship đẩy bullet qua cho nhau, người chơi nào hết máu trước sẽ thua
-  + Chế độ PVE: 1 người điều khiển và đấu với máy  *Tỉ lệ 30% sẽ có event round xuất hiện ngẫu nhiên tùy ván, event round là những round có 2 bullets thay vì 1
+  + Chế độ PVE: 1 người điều khiển và đấu với máy<br>*Tỉ lệ 30% sẽ có event round xuất hiện ngẫu nhiên tùy ván, event round là những round có 2 bullets thay vì 1
 
 III. Algorithm Introduction
 - Ý tưởng thuật toán:
