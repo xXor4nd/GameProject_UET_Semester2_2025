@@ -14,55 +14,32 @@
 #include "ship_motion.h"
 #include "bullet.h"
 #include "time.h"
-#include "menu.h"
 #include "Assets.h"
 #include "sound.h"
 #include "GameState.h"
 
-void gameLoop(Graphics& graphics, Asset& assets, Sound& sounds, ScrollingBackground& bgr, Sparkle& sparkle, BlueShip& blueShip, RedShip& redShip, BulletManager& bulletManager)
+struct Game
 {
+    Graphics& graphics;
+    Asset& assets;
+    Sound& sounds;
+
+    ScrollingBackground bgr;
+    Sparkle sparkle;
+    BlueShip blueShip;
+    RedShip redShip;
+    BulletManager bulletManager;
+
     GameState currentState = MENU;
     GameMode currentMode = MODE_1_PLAYER;
 
-    while (currentState != EXIT)
-    {
-        sounds.playMusicforState(currentState);
-
-        switch (currentState)
-        {
-            case MENU:
-                resetGame(bulletManager, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
-                handleGameStateMenu(graphics, assets, sounds, currentState, sparkle);
-                break;
-            case PLAY:
-                if (currentMode == MODE_1_PLAYER)
-                    handleGameStatePlay1P(graphics, assets, bgr, blueShip, redShip, bulletManager, currentState);
-                else
-                    handleGameStatePlay2P(graphics, assets, bgr, blueShip, redShip, bulletManager, currentState);
-                break;
-            case GAMEMODE:
-                handleGameStateGamemode(graphics, assets, currentState, currentMode);
-                break;
-            case TUTORIAL:
-                handleGameStateTutorial(graphics, assets, currentState);
-                break;
-            case PAUSED:
-                {
-                    bool replayRequested = false;
-                    handleGameStatePaused(graphics, assets, sounds, currentState, replayRequested);
-                    if (replayRequested)
-                    {
-                        resetGame(bulletManager, blueShip, redShip, blueShip.healthLoss, redShip.healthLoss);
-                    }
-                    break;
-                }
-            case GAME_OVER:
-                handleGameStateGameOver(graphics, assets, currentState, bulletManager, redShip, blueShip, currentMode);
-                break;
-            default:
-                break;
-        }
-    }
-}
+    Game(Graphics& g, Asset& _assets, Sound& _sound):
+        graphics(g), assets(_assets), sounds(_sound),
+        bgr(graphics, assets),
+        sparkle(graphics, assets, SPARKLE_FRAMES, SPARKLE_CLIPS),
+        blueShip(graphics, assets, BLUE_SHIP_FIXED_COORDINATE_Y, SDLK_LEFT, SDLK_RIGHT),
+        redShip(graphics, assets, RED_SHIP_FIXED_COORDINATE_Y, SDLK_a, SDLK_d),
+        bulletManager(graphics, assets, sounds) {}
+};
 
 #endif // _GAME__H

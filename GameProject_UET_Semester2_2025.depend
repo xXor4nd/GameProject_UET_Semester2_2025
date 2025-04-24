@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1745324689 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
+1745485158 source:e:\it\sdl\gameproject_uet_semester2_2025\main.cpp
 	"game.h"
+	"gameloop.h"
 
 1745278743 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
 	<SDL.h>
@@ -38,7 +39,7 @@
 	"graphics.h"
 	"Assets.h"
 
-1745324674 e:\it\sdl\gameproject_uet_semester2_2025\game.h
+1745485204 e:\it\sdl\gameproject_uet_semester2_2025\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -51,7 +52,6 @@
 	"ship_motion.h"
 	"bullet.h"
 	"time.h"
-	"menu.h"
 	"Assets.h"
 	"sound.h"
 	"GameState.h"
@@ -87,7 +87,7 @@
 	"bullet.h"
 	"defs.h"
 
-1745325186 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
+1745416260 e:\it\sdl\gameproject_uet_semester2_2025\menu.h
 	"graphics.h"
 	"animation.h"
 	"ship_motion.h"
@@ -113,4 +113,19 @@
 	"graphics.h"
 	"defs.h"
 	"Assets.h"
+
+1745484521 e:\it\sdl\gameproject_uet_semester2_2025\gameloop.h
+	"game.h"
+	"logic.h"
+
+1745484485 e:\it\sdl\gameproject_uet_semester2_2025\logic.h
+	"graphics.h"
+	"animation.h"
+	"ship_motion.h"
+	"bullet.h"
+	"Assets.h"
+	"sound.h"
+	"GameState.h"
+	"defs.h"
+	"game.h"
 
