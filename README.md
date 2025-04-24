@@ -1,19 +1,18 @@
 # Spaceship War
-Họ và tên: Đỗ Văn Đức
+Họ và tên: Đỗ Văn Đức<br>
 MSV: 24021410
 
 I. Introduction
 - Game lấy ý tưởng từ game Pong, 1 game khá nổi tiếng những năm mà máy tính trò chơi arcade còn phổ biến
 - Đây là game đầu tiên em làm, không thể tránh khỏi những bug tiềm ẩn khi xây dựng :((
-- Điểm mong muốn đạt được: 9
+- Điểm mong muốn đạt được: 9.5
 
 II. Gameplay
 - Người chơi điều khiển 2 ship: redShip và blueShip, đẩy bullet qua cho nhau.
 - Bullet khi va chạm sẽ tăng dần vận tốc, và tuân theo định luật phản xạ ( edge case: khi bullet va chạm ở rìa ngoài ship, sẽ random góc bật ra )
 - Có 2 chế độ
   + Chế độ PVP: 2 người chơi điều khiển 2 ship đẩy bullet qua cho nhau, người chơi nào hết máu trước sẽ thua
-  + Chế độ PVE: 1 người điều khiển và đấu với máy
-    *Tỉ lệ 30% sẽ có event round xuất hiện ngẫu nhiên tùy ván, event round là những round có 2 bullets thay vì 1
+  + Chế độ PVE: 1 người điều khiển và đấu với máy<br>*Tỉ lệ 30% sẽ có event round xuất hiện ngẫu nhiên tùy ván, event round là những round có 2 bullets thay vì 1
 
 III. Algorithm Introduction
 - Ý tưởng thuật toán:
@@ -36,6 +35,7 @@ IV. Graphics introduction
 V. Source tham khảo
 - 2 shipTexture và bulletTexture là tự vẽ trên https://www.pixilart.com/ ( để có thể biết rõ các collider để xử lý va chạm )
 - Các texture khác (máu, trái tim, ingameBackground, menuBackground) lấy từ nhiều nguồn trên mạng, Chat GPT gen ảnh,...
+- Animation sparkle lấy từ https://itch.io/
 - Âm thanh lấy từ https://freesound.org/, font chữ lấy trong file hướng dẫn sdl2 lập trình nâng cao cơ bản
 - Nguồn học chính:
   + Docs lập trình nâng cao cơ bản được cung cấp
@@ -43,18 +43,19 @@ V. Source tham khảo
   + Lazyfoo ( mainly Motion, Timing, MouseEvent, Per-Pixel Collision, Scrolling,.. )
   + Sử dụng AI: Tham khảo idea, gen ảnh, rút ngắn 1 số đoạn code rườm rà mà ý nghĩa tương đương ( ở mức độ hiểu và tự triển khai phù hợp với cấu trúc game của mình )
 
-VI. Checklist
-Dùng các lệnh vẽ hình ✅
-Texture ✅
-Background ✅
-Event bàn phím ✅
-Event chuột ✅
-Xử lý va chạm ✅
-Sound ✅
-Sound on off ✅
-Background music ✅
-Font ✅
-Menu ✅
-Pause/Resume ✅
+VI. Checklist<br>
+Dùng các lệnh vẽ hình ✅✅<br>
+Texture ✅<br>
+Background ✅<br>
+Event bàn phím ✅<br>
+Event chuột ✅<br>
+Animation (hoạt hình) ✅<br>
+Xử lý va chạm ✅<br>
+Sound ✅<br>
+Sound on off ✅<br>
+Background music ✅<br>
+Font ✅<br>
+Menu ✅<br>
+Pause/Resume ✅<br>
 Status bar / lives (mạng/máu...) ✅
 
