@@ -9,6 +9,7 @@ I. Introduction
 
 II. Gameplay
 - Người chơi điều khiển 2 ship: redShip và blueShip, đẩy bullet qua cho nhau.
+- Mỗi round đều random angle di chuyển của bullet ( sang phải và lên trên / xuống dưới ) ( giải thích ở dưới )
 - Bullet khi va chạm với 2 thuyền sẽ tăng dần vận tốc (theo phương va chạm đó, dx, hoặc dy, hoặc cả hai), và tuân theo định luật phản xạ ( edge case: khi bullet va chạm ở rìa ngoài ship, sẽ random góc bật ra )
   ( Còn khi va chạm với 2 tường thì chỉ bật lại 1 góc phản xạ bằng góc tới lúc trước, vì chỉ đổi chiều dx và k tăng vận tốc theo phương đó )
 - Có 2 chế độ
@@ -17,9 +18,10 @@ II. Gameplay
 
 III. Algorithm Introduction
 - Ý tưởng thuật toán:
-  + Đạn di chuyển theo 2 trục Ox, Oy. Ta sẽ xét trên từng trục, nếu có va chạm sẽ đổi chiều vận tốc trên trục đó
+  + Đạn di chuyển theo 2 trục Ox, Oy. Ta sẽ xét trên từng trục, nếu có va chạm sẽ đổi chiều vận tốc trên trục đó <br>
+  ( Trước khi đổi chiều, ta đẩy hẳn bullet cả khỏi khối collier va chạm sau đó mới đổi chiều vận tốc để tránh bug va chạm liên tục )
   + Khi bắt đầu mỗi round thì đều random góc bật của bullet
-  + Nếu va chạm theo cả 2 trục thì thuật random góc phản xạ sẽ chạy, gen ra góc bật ngẫu nhiên từ [-65, -25] hoặc [25, 65] degree, góc bật ở đây là góc bật ra so với phương của Ox (dấu của dx), dấu trừ thể hiện góc bật ngược chiều lại (tức dy < 0) <br>
+  + Nếu va chạm theo cả 2 trục thì thuật random góc phản xạ sẽ chạy, gen ra góc bật ngẫu nhiên từ [-65, -25] hoặc [25, 65] degree, góc bật ở đây là góc bật ra so với phương của Ox (dấu của dx), góc âm thể hiện góc bật ngược chiều lại ( tức dy < 0 ) <br>
   ( vì cos(-alpha) = cos(alpha) còn sin(-alpha) = - sin(alpha) --> đạn sẽ bay sang bên phải còn lên trên hoặc xuống dưới tùy góc âm hay dương random ra )
 
   * Trong chế độ PVE:
