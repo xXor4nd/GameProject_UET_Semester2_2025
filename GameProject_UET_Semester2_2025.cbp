@@ -39,9 +39,10 @@
 		<Unit filename="collision.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="game.h" />
+		<Unit filename="gameloop.h" />
 		<Unit filename="graphics.h" />
+		<Unit filename="logic.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="menu.h" />
 		<Unit filename="ship_motion.h" />
 		<Unit filename="sound.h" />
 		<Unit filename="time.h" />

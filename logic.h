@@ -80,6 +80,7 @@ void handleGameStateMenu(Game& game)
     SDL_Texture* menuBackground = game.assets.menuBackground;
     Uint32 prevTick = SDL_GetTicks();
     SDL_Rect soundButton = { 10, SCREEN_HEIGHT - 34, 24, 24 };
+    Uint32 menuStart = SDL_GetTicks();
 
     Button buttons[4] = { Button(game), Button(game), Button(game), Button(game) };
     const char* labels[4] = {"PLAY", "GAMEMODE", "TUTORIAL", "EXIT"};
@@ -126,7 +127,15 @@ void handleGameStateMenu(Game& game)
                     {
                         switch (i)
                         {
-                            case 0: game.currentState = PLAY; game.graphics.play(game.assets.clickedSound); break;
+                            case 0:
+                                {
+                                    Uint32 passedTime = SDL_GetTicks() - menuStart;
+                                    game.bulletManager.startTime += passedTime;
+                                    game.bulletManager.eventStartTime += passedTime;
+                                    game.currentState = PLAY;
+                                    game.graphics.play(game.assets.clickedSound);
+                                    break;
+                                }
                             case 1: game.currentState = GAMEMODE; game.graphics.play(game.assets.clickedSound); break;
                             case 2: game.currentState = TUTORIAL; game.graphics.play(game.assets.clickedSound); break;
                             case 3: game.currentState = EXIT; game.graphics.play(game.assets.clickedSound); break;

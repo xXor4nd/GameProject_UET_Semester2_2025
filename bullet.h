@@ -71,9 +71,9 @@ struct Bullet
         }
     }
 
-    void handleLogic(BlueShip& blueShip, RedShip& redShip, Uint32 startTime)
+    void handleLogic(BlueShip& blueShip, RedShip& redShip, int timeLeft)
     {
-        if (handleTimeInterval(graphics, assets, startTime) == 0)
+        if (timeLeft == 0)
         {
             bool collidedX = false;
             bool collidedY = false;
@@ -190,6 +190,8 @@ struct Bullet
         else
             angle = (rand() % 41 + 25) * M_PI / 180.0; // [25, 65]
 
+//        cout << "New angle: " << angle << endl;
+
         dxNew = speed * cos(angle);
         dyNew = speed * sin(angle);
 
@@ -218,8 +220,9 @@ struct BulletManager
 
     void handleLogic(BlueShip& blueShip, RedShip& redShip)
     {
-        bullet1.handleLogic(blueShip, redShip, startTime);
-        if (is2BulletsEvent) bullet2.handleLogic(blueShip, redShip, startTime);
+        int timeLeft = handleTimeInterval(bullet1.graphics, bullet1.assets, startTime);
+        bullet1.handleLogic(blueShip, redShip, timeLeft);
+        if (is2BulletsEvent) bullet2.handleLogic(blueShip, redShip, timeLeft);
     }
 
     void resetRound(BlueShip& blueShip, RedShip& redShip)
@@ -269,7 +272,7 @@ struct BulletManager
                 int textX = SCREEN_WIDTH / 2 - textW / 2;
                 int textY = SCREEN_HEIGHT / 2 - 100;
 
-                bullet2.graphics.renderTexture(textTexture, textX, textY);
+                bullet1.graphics.renderTexture(textTexture, textX, textY);
                 SDL_DestroyTexture(textTexture);
             }
         }
