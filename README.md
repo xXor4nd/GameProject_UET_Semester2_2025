@@ -22,8 +22,8 @@ III. Algorithm Introduction
 
   * Trong chế độ PVE:
   - Người chơi điều khiển redShip, máy điều khiển blueShip thông qua thuật toán:
-  + Nếu k có event (tức là 1 bullet) thì chỉ đơn giản là nếu đạn ở bên trái so với blueShip thì blueShip sẽ bay sang đó ( check khoảng cách trên trục Ox)
-  + Còn khi có 2 bullet, máy sẽ tìm khoảng cách Euclid ngắn nhất từ tâm blueShip đến tâm của 2 bullet, và sẽ target vào bullet đó, sau đó ý tưởng giống khi xử lý 1 bullet.
+  + Nếu k có event (tức là 1 bullet) thì chỉ đơn giản là nếu đạn ở bên trái so với blueShip thì blueShip sẽ bay sang trái ( check khoảng cách trên trục Ox), còn bên phải thì bay sang phải
+  + Còn khi có 2 bullet, máy sẽ tìm khoảng cách Euclid ngắn nhất từ tâm blueShip đến tâm của 2 bullet, và sẽ target vào bullet đó, sau khi target thì tiếp theo ý tưởng giống khi xử lý 1 bullet.
 
 IV. Graphics introduction
 - Có menu, màn hình dừng game, tutorial
@@ -36,7 +36,7 @@ V. Source tham khảo
 - 2 shipTexture và bulletTexture là tự vẽ trên https://www.pixilart.com/ ( để có thể biết rõ các collider để xử lý va chạm )
 - Các texture khác (máu, trái tim, ingameBackground, menuBackground) lấy từ nhiều nguồn trên mạng, Chat GPT gen ảnh,...
 - Animation sparkle lấy từ https://itch.io/
-- Âm thanh lấy từ https://freesound.org/, font chữ lấy trong file hướng dẫn sdl2 lập trình nâng cao cơ bản
+- Âm thanh lấy từ https://freesound.org/, font chữ lấy trong file docs hướng dẫn sdl2 lập trình nâng cao cơ bản
 - Nguồn học chính:
   + Docs lập trình nâng cao cơ bản được cung cấp
   + Glusoft: https://glusoft.com/sdl2-tutorials/
@@ -44,7 +44,7 @@ V. Source tham khảo
   + Sử dụng AI: Tham khảo idea, gen ảnh, rút ngắn 1 số đoạn code rườm rà mà ý nghĩa tương đương ( ở mức độ hiểu và tự triển khai phù hợp với cấu trúc game của mình )
 
 VI. Checklist<br>
-Dùng các lệnh vẽ hình ✅✅<br>
+Dùng các lệnh vẽ hình ✅<br>
 Texture ✅<br>
 Background ✅<br>
 Event bàn phím ✅<br>
