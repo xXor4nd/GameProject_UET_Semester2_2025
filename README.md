@@ -19,14 +19,14 @@ II. Gameplay
 III. Algorithm Introduction
 - Ý tưởng thuật toán:
   + Đạn di chuyển theo 2 trục Ox, Oy. Ta sẽ xét trên từng trục, nếu có va chạm sẽ đổi chiều vận tốc trên trục đó <br>
-  ( Trước khi đổi chiều, ta đẩy hẳn bullet cả khỏi khối collier va chạm sau đó mới đổi chiều vận tốc để tránh bug va chạm liên tục )
+  ( Trước khi đổi chiều, ta đẩy hẳn bullet cả khỏi khối collier va chạm, sau đó mới đổi chiều vận tốc để tránh bug va chạm liên tục )
   + Khi bắt đầu mỗi round thì đều random góc bật của bullet
   + Nếu va chạm theo cả 2 trục thì thuật random góc phản xạ sẽ chạy, gen ra góc bật ngẫu nhiên từ [-65, -25] hoặc [25, 65] degree, góc bật ở đây là góc bật ra so với phương của Ox (dấu của dx), góc âm thể hiện góc bật ngược chiều lại ( tức dy < 0 ) <br>
   ( vì cos(-alpha) = cos(alpha) còn sin(-alpha) = - sin(alpha) --> đạn sẽ bay sang bên phải còn lên trên hoặc xuống dưới tùy góc âm hay dương random ra )
 
   * Trong chế độ PVE:
   - Người chơi điều khiển redShip, máy điều khiển blueShip thông qua thuật toán:
-  + Nếu k có event (tức là 1 bullet) thì chỉ đơn giản là nếu đạn ở bên trái so với blueShip thì blueShip sẽ bay sang trái ( check khoảng cách trên trục Ox ), còn bên phải thì bay sang phải (có 1 vùng deadzone)
+  + Nếu k có event (tức là 1 bullet) thì chỉ đơn giản là nếu đạn ở bên trái so với blueShip thì blueShip sẽ bay sang trái ( check khoảng cách trên trục Ox ), còn bên phải thì bay sang phải (có 1 vùng deadzone, em đặt tên biến hơi khó hiểu ạ :(, thật ra k có deadzone vẫn thắng được máy vì ở đây tốc độ đạn tăng dần, nên tâm blueShip sẽ k thể theo kịp tâm viên đạn di chuyển được)
   + Còn khi có 2 bullet, ta duyệt 2 bullet để check khi có bullet bay về phía nó, và máy sẽ tìm khoảng cách Euclid ngắn nhất từ tâm blueShip đến tâm của 2 bullet, và sẽ target vào bullet đó, sau khi target thì tiếp theo ý tưởng giống khi xử lý 1 bullet.
 
 IV. Graphics introduction
