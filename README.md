@@ -14,7 +14,8 @@ II. Gameplay
   ( Còn khi va chạm với 2 tường thì chỉ bật lại 1 góc phản xạ bằng góc tới lúc trước, vì chỉ đổi chiều dx và k tăng vận tốc theo phương đó )
 - Có 2 chế độ
   + Chế độ PVP: 2 người chơi điều khiển 2 ship đẩy bullet qua cho nhau, người chơi nào hết máu trước sẽ thua
-  + Chế độ PVE: 1 người điều khiển và đấu với máy<br>*Tỉ lệ 30% sẽ có event round xuất hiện ngẫu nhiên tùy ván, event round là những round có 2 bullets thay vì 1
+  + Chế độ PVE: 1 người điều khiển và đấu với máy<br>*Tỉ lệ 30% sẽ có event round xuất hiện ngẫu nhiên tùy ván, event round là những round có 2 bullets thay vì 1 <br>
+    ** Game có thể giật lag tùy thuộc vào cấu hình máy do em k xử lý fps ạ :(. Nếu cô chơi thấy đạn hoặc thuyền di chuyển quá chậm cô có thể tăng thông số để cho mượt hơn ạ **
 
 III. Algorithm Introduction
 - Ý tưởng thuật toán:
