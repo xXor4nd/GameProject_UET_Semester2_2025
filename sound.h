@@ -56,7 +56,7 @@ struct Sound
 
     void switchMusicTo(Mix_Music* newMusic)
     {
-        if (currentPlaying == newMusic && !isPaused) return;
+        if (currentPlaying == newMusic) return;
 
         stopMusic();
         if (newMusic)

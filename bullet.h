@@ -176,6 +176,8 @@ struct Bullet
         isDamaged = false;
 
         GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.5);
+//        cout << "Reset Bullet: dx = " << dx << ", dy = " << dy << endl;
+
         shiftCollider();
     }
 

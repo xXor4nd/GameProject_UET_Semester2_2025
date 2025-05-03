@@ -264,23 +264,35 @@ void handleGameStatePlay1P(Game& game)
         float minDist = 1e9;
         float targetX = -1;
 
-        Bullet* bullets[] = { &game.bulletManager.bullet1, &game.bulletManager.bullet2 };
-        for (auto b : bullets)
+        if (!game.bulletManager.is2BulletsEvent)
         {
-            if (!b->roundEnded && b->dy < 0)
+            Bullet& b = game.bulletManager.bullet1;
+            if (!b.roundEnded && b.dy < 0)
             {
-                float bulletCenterX = b->x + BULLET_WIDTH / 2;
-                float bulletCenterY = b->y + BULLET_HEIGHT / 2;
-
-                float dist = sqrt((bulletCenterX - blueCenterX) * (bulletCenterX - blueCenterX) + (bulletCenterY - blueCenterY) *  (bulletCenterY - blueCenterY) );
-
-                if (dist < minDist)
+                float bulletCenterX = b.x + BULLET_WIDTH / 2;
+                targetX = bulletCenterX;
+            }
+        }
+        else
+        {
+            Bullet* bullets[] = { &game.bulletManager.bullet1, &game.bulletManager.bullet2 };
+            for (auto b : bullets)
+            {
+                if (!b->roundEnded && b->dy < 0)
                 {
-                    minDist = dist;
-                    targetX = bulletCenterX;
+                    float bulletCenterX = b->x + BULLET_WIDTH / 2;
+                    float bulletCenterY = b->y + BULLET_HEIGHT / 2;
+                    float dist = sqrt((bulletCenterX - blueCenterX) * (bulletCenterX - blueCenterX) + (bulletCenterY - blueCenterY) *  (bulletCenterY - blueCenterY) );
+
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        targetX = bulletCenterX;
+                    }
                 }
             }
         }
+
         if (targetX != -1)
         {
             if (targetX < blueCenterX - DEADZONE_X)
