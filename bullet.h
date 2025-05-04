@@ -175,7 +175,7 @@ struct Bullet
         roundEnded = false;
         isDamaged = false;
 
-        GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.5);
+        GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.75);
 //        cout << "Reset Bullet: dx = " << dx << ", dy = " << dy << endl;
 
         shiftCollider();

@@ -3,14 +3,14 @@
 	"game.h"
 	"gameloop.h"
 
-1745278743 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
+1746327847 e:\it\sdl\gameproject_uet_semester2_2025\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
 	"defs.h"
 
-1745324990 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
+1746330712 e:\it\sdl\gameproject_uet_semester2_2025\defs.h
 
 1743215108 source:e:\it\sdl\gameproject_uet_semester2_2025\src\main.cpp
 	<iostream>
@@ -56,7 +56,7 @@
 	"sound.h"
 	"GameState.h"
 
-1746280393 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
+1746330725 e:\it\sdl\gameproject_uet_semester2_2025\bullet.h
 	<vector>
 	<iostream>
 	<cmath>
@@ -118,7 +118,7 @@
 	"game.h"
 	"logic.h"
 
-1746280851 e:\it\sdl\gameproject_uet_semester2_2025\logic.h
+1746329401 e:\it\sdl\gameproject_uet_semester2_2025\logic.h
 	"graphics.h"
 	"animation.h"
 	"ship_motion.h"
@@ -128,4 +128,8 @@
 	"GameState.h"
 	"defs.h"
 	"game.h"
+	"fps.h"
+
+1746326906 e:\it\sdl\gameproject_uet_semester2_2025\fps.h
+	<SDL.h>
 

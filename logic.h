@@ -10,6 +10,7 @@
 #include "GameState.h"
 #include "defs.h"
 #include "game.h"
+#include "fps.h"
 
 struct Button
 {
@@ -178,8 +179,11 @@ void handleGameStatePlay2P(Game& game)
 {
     SDL_Event e;
     bool quit = false;
+    FPS FPSlimit(150);
+
     while (!quit)
     {
+        FPSlimit.startFrame();
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
@@ -232,6 +236,7 @@ void handleGameStatePlay2P(Game& game)
         game.bulletManager.render(game.blueShip, game.redShip);
 
         game.graphics.presentScene();
+        FPSlimit.endFrame();
     }
 }
 
@@ -239,8 +244,11 @@ void handleGameStatePlay1P(Game& game)
 {
     SDL_Event e;
     bool quit = false;
+    FPS FPSlimit(150);
+
     while (!quit)
     {
+        FPSlimit.startFrame();
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
@@ -295,10 +303,10 @@ void handleGameStatePlay1P(Game& game)
 
         if (targetX != -1)
         {
-            if (targetX < blueCenterX - DEADZONE_X)
-                game.blueShip.dx = -SHIP_VELO;
-            else if (targetX > blueCenterX + DEADZONE_X)
-                game.blueShip.dx = SHIP_VELO;
+            if (targetX < blueCenterX - DELAY_DISTANCE_X)
+                game.blueShip.dx = -SHIP_BOT_VELO;
+            else if (targetX > blueCenterX + DELAY_DISTANCE_X)
+                game.blueShip.dx = SHIP_BOT_VELO;
             else
                 game.blueShip.dx = 0;
         }
@@ -334,6 +342,7 @@ void handleGameStatePlay1P(Game& game)
         game.bulletManager.render(game.blueShip, game.redShip);
 
         game.graphics.presentScene();
+        FPSlimit.endFrame();
     }
 }
 
