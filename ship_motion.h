@@ -37,9 +37,9 @@ struct BlueShip
 
             mBlueCollider.resize(3);
 
-            mBlueCollider[0] = {0, 0, 95, 1};
-            mBlueCollider[1] = {0, 0, 71, 5};
-            mBlueCollider[2] = {0, 0, 63, 4};
+            mBlueCollider[0] = {0, 0, 65, 5};
+            mBlueCollider[1] = {0, 0, 55, 5};
+            mBlueCollider[2] = {0, 0, 45, 5};
 
             shiftCollider();
         }
@@ -107,6 +107,13 @@ struct BlueShip
         handleHealth();
         graphics.renderTexture(blue_heart, BLUE_SHIP_HEART_FIXED_COORDINATE_X, BLUE_SHIP_HEART_FIXED_COORDINATE_Y);
         graphics.renderTexture(health_bar_texture, BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, BLUE_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y);
+
+        // Debug
+//        for (const auto& rect : mBlueCollider)
+//        {
+//            SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
+//            SDL_RenderDrawRect(graphics.renderer, &rect);
+//        }
     }
 
 };
@@ -118,7 +125,7 @@ struct RedShip
     Asset& assets;
 
     int x = 0, dx = 0;
-    int y = RED_SHIP_RESTRICTED_LINE_Y;
+    int y = SCREEN_HEIGHT - SHIP_HEIGHT - 35;
     int healthLoss = 0;
     bool isGameOver = false;
 
@@ -139,9 +146,9 @@ struct RedShip
 
             mRedCollider.resize(3);
 
-            mRedCollider[0] = {0, 0, 63, 4};
-            mRedCollider[1] = {0, 0, 71, 5};
-            mRedCollider[2] = {0, 0, 95, 1};
+            mRedCollider[0] = {0, 0, 45, 5};
+            mRedCollider[1] = {0, 0, 55, 5};
+            mRedCollider[2] = {0, 0, 65, 5};
 
             shiftCollider();
         }
@@ -208,6 +215,13 @@ struct RedShip
         handleHealth();
         graphics.renderTexture(red_heart, RED_SHIP_HEART_FIXED_COORDINATE_X, RED_SHIP_HEART_FIXED_COORDINATE_Y);
         graphics.renderTexture(health_bar_texture, RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_X, RED_SHIP_HEALTH_BAR_FIXED_COORDINATE_Y);
+
+        // Debug
+//        for (const auto& rect : mRedCollider)
+//        {
+//            SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
+//            SDL_RenderDrawRect(graphics.renderer, &rect);
+//        }
     }
 
 };

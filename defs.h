@@ -21,20 +21,20 @@ const int SPARKLE_FRAMES = sizeof(SPARKLE_CLIPS) / (4 * sizeof(int));
 
 const int SHIP_WIDTH = 95;
 const int SHIP_HEIGHT = 95;
-const float SHIP_VELO = 2.5;
+const float SHIP_VELO = 2;
 const float SHIP_BOT_VELO = 2.9;
 
 const int BLUE_SHIP_FIXED_COORDINATE_Y = 35;
 const int RED_SHIP_FIXED_COORDINATE_Y = SCREEN_HEIGHT - SHIP_HEIGHT - 35;
 
 const int BLUE_SHIP_RESTRICTED_LINE_X = 0;
-const int BLUE_SHIP_RESTRICTED_LINE_Y = 120;
+const int BLUE_SHIP_RESTRICTED_LINE_Y = 115;
 const int RED_SHIP_RESTRICTED_LINE_X = 0;
 const int RED_SHIP_RESTRICTED_LINE_Y = SCREEN_HEIGHT - BLUE_SHIP_RESTRICTED_LINE_Y;
 
 const int BULLET_WIDTH = 19;
 const int BULLET_HEIGHT = 19;
-const float BULLET_INITIAL_SPEED = 1.5;
+const float BULLET_INITIAL_SPEED = 2.25;
 
 const int countdownTime = 3000;
 
@@ -59,7 +59,7 @@ const int BUTTON_COORDINATE_X = 70;
 const int BUTTON_COORDINATE_Y = 455;
 
 const int DELAY_DISTANCE_X = 5;
-const int DEADZONE_Y = 2;
+const float DEADZONE_Y = 0.75;
 
 const float INITIAL_BULLET_DISTANCE_FROM_CENTER = 20;
 

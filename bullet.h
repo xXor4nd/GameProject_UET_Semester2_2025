@@ -21,8 +21,8 @@ struct Bullet
     Asset& assets;
     Sound& sounds;
 
-    float x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = BULLET_INITIAL_SPEED;
-    float y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = BULLET_INITIAL_SPEED;
+    double x = (SCREEN_WIDTH - BULLET_WIDTH) / 2, dx = BULLET_INITIAL_SPEED;
+    double y = (SCREEN_HEIGHT - BULLET_HEIGHT) / 2, dy = BULLET_INITIAL_SPEED;
     bool roundEnded = false;
     bool isDamaged = false;
 
@@ -82,7 +82,7 @@ struct Bullet
             x += dx;
             shiftCollider();
 
-            if (x < 0 || x + BULLET_WIDTH > SCREEN_WIDTH)
+            if (x <= 0 || x + BULLET_WIDTH >= SCREEN_WIDTH)
             {
                 x -= dx;
                 dx = -dx;
@@ -104,7 +104,7 @@ struct Bullet
                 do
                 {
                     dx = dx > 0 ? dx + 0.2 : dx - 0.2;
-                } while (dx == 0);
+                } while (dx > -0.2 && dx < 0.2);
             }
 
             y += dy;
@@ -125,14 +125,17 @@ struct Bullet
                 do
                 {
                     dy = dy > 0 ? dy + 0.2 : dy - 0.2;
-                } while (dy == 0);
+                } while (dy > -0.2 && dy < 0.2);
             }
 
 
             if (collidedX && collidedY)
             {
-                float curSpeed = sqrt(dx * dx + dy * dy);
-                GenerateRandomAngle(curSpeed);
+                do
+                {
+                    float curSpeed = sqrt(dx * dx + dy * dy);
+                    GenerateRandomAngle(curSpeed);
+                } while ( (dx > -0.2 && dx < 0.2) || (dy > -0.2 && dy < 0.2) );
             }
 
             if (isPlayCollisionSound && !sounds.collisionMuted)
@@ -175,7 +178,7 @@ struct Bullet
         roundEnded = false;
         isDamaged = false;
 
-        GenerateRandomAngle(BULLET_INITIAL_SPEED + 0.75);
+        GenerateRandomAngle(BULLET_INITIAL_SPEED);
 //        cout << "Reset Bullet: dx = " << dx << ", dy = " << dy << endl;
 
         shiftCollider();
@@ -201,10 +204,16 @@ struct Bullet
         dy = dyNew;
     }
 
-
     void render()
     {
         graphics.renderTexture(bulletTexture, x, y);
+
+        //Debug
+//        for (const auto& rect : mColliders)
+//        {
+//            SDL_SetRenderDrawColor(graphics.renderer, 255, 0, 0, 255);
+//            SDL_RenderDrawRect(graphics.renderer, &rect);
+//        }
     }
 };
 

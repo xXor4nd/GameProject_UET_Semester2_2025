@@ -38,6 +38,7 @@
 		<Unit filename="bullet.h" />
 		<Unit filename="collision.h" />
 		<Unit filename="defs.h" />
+		<Unit filename="fps.h" />
 		<Unit filename="game.h" />
 		<Unit filename="gameloop.h" />
 		<Unit filename="graphics.h" />
