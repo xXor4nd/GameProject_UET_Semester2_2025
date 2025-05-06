@@ -189,16 +189,16 @@ struct Bullet
         float angle;
         float dxNew, dyNew;
 
-        int coin = rand() % 2;
-        if (coin & 1)
-            angle = (rand() % 41 - 65) * M_PI / 180.0; // [-65, -25]
-        else
-            angle = (rand() % 41 + 25) * M_PI / 180.0; // [25, 65]
+        angle = (rand() % 41 + 25) * M_PI / 180.0; // [25, 65]
 
 //        cout << "New angle: " << angle << endl;
 
         dxNew = speed * cos(angle);
         dyNew = speed * sin(angle);
+
+        int coinDx = rand() % 2, coinDy = rand() % 2;
+        dxNew = (coinDx & 1) ? dxNew : -dxNew;
+        dyNew = (coinDy & 1) ? dyNew : - dyNew;
 
         dx = dxNew;
         dy = dyNew;
