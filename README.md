@@ -10,7 +10,7 @@ I. Introduction
 II. Gameplay
 - Người chơi điều khiển 2 ship: redShip và blueShip, đẩy bullet qua cho nhau.
 - Mỗi round đều random angle di chuyển của bullet ( sang phải / trái và lên trên / xuống dưới ) ( giải thích ở dưới )
-- Bullet khi va chạm với 2 thuyền sẽ tăng dần vận tốc (theo phương va chạm đó, dx, hoặc dy, hoặc cả 2 (khi va chạm theo cả 2 phương, khi đó rơi vào edge case)), và tuân theo định luật phản xạ ( edge case: khi bullet va chạm ở rìa ngoài ship, sẽ random góc bật ra )
+- Bullet khi va chạm với thuyền sẽ tăng dần vận tốc (theo phương va chạm đó, dx, hoặc dy, hoặc cả 2 (khi va chạm theo cả 2 phương, khi đó rơi vào edge case)), và tuân theo định luật phản xạ ( edge case: khi bullet va chạm ở rìa ngoài ship, sẽ random góc bật ra theo phương ngược lại ) (giải thích chi tiết ở phần III)
   ( Còn khi va chạm với 2 tường thì chỉ bật lại 1 góc phản xạ bằng góc tới lúc trước, vì chỉ đổi chiều dx và k tăng vận tốc theo phương đó )
 - Có 2 chế độ
   + Chế độ PVP: 2 người chơi điều khiển 2 ship đẩy bullet qua cho nhau, người chơi nào hết máu trước sẽ thua
@@ -21,7 +21,7 @@ III. Algorithm Introduction
   + Đạn di chuyển theo 2 trục Ox, Oy. Ta sẽ xét trên từng trục, nếu có va chạm sẽ đổi chiều vận tốc trên trục đó <br>
   ( Trước khi đổi chiều, ta đẩy hẳn bullet cả khỏi khối collier va chạm, sau đó mới đổi chiều vận tốc để tránh bug va chạm liên tục ) <br>
   + Trong 1 frame, hiểu đơn giản cơ chế viên đạn di chuyển thì đây là phép cộng 2 vecto theo chiều dx và dy sẽ ra vecto tổng hợp là chiều di chuyển của viên đạn ( có thể hiểu là đi chéo ) <br>
-  + Nếu va chạm theo cả 2 trục thì thuật random góc phản xạ sẽ chạy, gen ra góc bật ngẫu nhiên trong [25, 65] degree ( tránh góc 0 hoặc 90 để tránh đạn bay vertically / horizontally ), góc bật ở đây là góc giữa tia bật ra ( tổng hợp của dx và dy sau khi đảo dấu vì va chạm cả 2 phương nên nó đảo dấu trước rồi hàm này mới chạy ) và tia dx ( kiểu phép cộng vecto trong toán học đã nói ở trên ) <br>
+  + Nếu va chạm theo cả 2 trục thì thuật random góc phản xạ sẽ chạy, gen ra góc bật ngẫu nhiên trong [20, 60] degree ( tránh góc 0 hoặc 90 để tránh đạn bay vertically / horizontally ), góc bật ở đây là góc giữa tia bật ra ( tổng hợp của dx và dy sau khi đảo dấu vì va chạm cả 2 phương nên nó đảo dấu trước rồi hàm này mới chạy ) và tia dx ( kiểu phép cộng vecto trong toán học đã nói ở trên ) ( vẫn giữ nguyên dấu âm nếu dx hoặc dy âm lúc trước, đạn sẽ bật ngược lại với góc random mới chứ k theo định luật phản xạ nữa )<br>
   + Hàm random góc này cũng được gọi mỗi round ( tương đương random ra dx và dy mới )
   ( vì cos(alpha) > 0 và sin(alpha) > 0 với alpha là góc nhọn --> Khi nhân vào speed ( luôn dương ) sẽ luôn dương --> đạn sẽ bay lên và sang phải, sau đó ta tung đồng xu để xác định dấu ngẫu nhiên theo cả 2 chiều ( trái + lên / trái + xuống / phải + lên / phải + xuống ) <br>
 
