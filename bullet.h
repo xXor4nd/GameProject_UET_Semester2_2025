@@ -134,7 +134,7 @@ struct Bullet
                 do
                 {
                     float curSpeed = sqrt(dx * dx + dy * dy);
-                    GenerateRandomAngle(curSpeed);
+                    GenerateRandomAngleWhenCollision(curSpeed);
                 } while ( (dx > -0.2 && dx < 0.2) || (dy > -0.2 && dy < 0.2) );
             }
 
@@ -178,18 +178,18 @@ struct Bullet
         roundEnded = false;
         isDamaged = false;
 
-        GenerateRandomAngle(BULLET_INITIAL_SPEED);
+        GenerateRandomAngleEachRound(BULLET_INITIAL_SPEED);
 //        cout << "Reset Bullet: dx = " << dx << ", dy = " << dy << endl;
 
         shiftCollider();
     }
 
-    void GenerateRandomAngle(float speed)
+    void GenerateRandomAngleEachRound(float speed)
     {
         float angle;
         float dxNew, dyNew;
 
-        angle = (rand() % 41 + 25) * M_PI / 180.0; // [25, 65]
+        angle = (rand() % 41 + 20) * M_PI / 180.0; // [20, 60]
 
 //        cout << "New angle: " << angle << endl;
 
@@ -202,6 +202,28 @@ struct Bullet
 
         dx = dxNew;
         dy = dyNew;
+    }
+
+    void GenerateRandomAngleWhenCollision(float speed)
+    {
+        float angle;
+        float dxNew, dyNew;
+
+        angle = (rand() % 41 + 20) * M_PI / 180.0; // [20, 60]
+
+        bool isPreserveNegativeValue_Dx = false;
+        bool isPreserveNegativeValue_Dy = false;
+
+        if (dx < 0) isPreserveNegativeValue_Dx = true;
+        if (dy < 0) isPreserveNegativeValue_Dy = true;
+
+//        cout << "New angle: " << angle << endl;
+
+        dxNew = speed * cos(angle);
+        dyNew = speed * sin(angle);
+
+        dx = isPreserveNegativeValue_Dx ? -dxNew : dxNew;
+        dy = isPreserveNegativeValue_Dy ? -dyNew : dyNew;
     }
 
     void render()
